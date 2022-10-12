@@ -1,0 +1,142 @@
+.container {
+    width: 100;
+    height: 100;
+    /* margin-right: 10%;
+    margin-left: 10%; */
+}
+
+.header {
+    background-color: #4156f2;
+    height: 10%;
+}
+
+.logo {
+    width: 10%;
+    height: 10%;
+
+}
+
+.title {
+    font-size: 30px;
+    font-family: Impact;
+    color: #4156f2;
+
+}
+
+.mail {
+    background-color: aqua;
+    height: 100%;
+    width: 100%;
+}
+
+
+
+.titleCardFrame {
+    border-color: black;
+    background-color: aqua;
+    height: 23%;
+    width: 100%;
+    cursor: pointer;
+
+}
+
+.card {
+
+    height: 200px;
+    width: 300px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    box-shadow: 2px 2px rgb(184, 213, 223);
+    margin: 4px;
+
+}
+
+.titleCard {
+    font-size: 20px;
+    text-align: center;
+    padding: 2%;
+}
+
+.description {
+    font-size: 15px;
+    text-align: center;
+    padding: 2%;
+}
+
+.descriptionFrame {
+    border-color: black;
+    height: 23%;
+    width: 100%;
+}
+
+.date {
+    font-size: 15px;
+    text-align: center;
+    padding: 2%;
+}
+
+.dateTime {
+    border-color: black;
+    height: 23%;
+    width: 100%;
+}
+
+.task-cards {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 2%;
+}
+
+
+
+.mobail-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.bt {
+    background-color: #4156f2;
+    color: white;
+    padding: 10px;
+    border-radius: 13px;
+    margin: 1%;
+    cursor: pointer;
+
+}
+
+.mail-logo {
+    font-size: 24px;
+    margin-bottom: -5px;
+
+}
+
+.buttons {
+    text-transform: none !important;
+}
+
+
+
+
+
+tasks {
+    background-color: chartreuse;
+}
+
+@media only screen and (max-width: 600px) {
+    .css-heg063-MuiTabs-flexContainer {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .logo {
+        width: 36%;
+        height: 10%;
+
+    }
+
+}
