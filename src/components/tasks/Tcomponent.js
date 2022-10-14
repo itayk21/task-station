@@ -16,8 +16,7 @@ import Stack from '@mui/material/Stack';
 import { margin } from '@mui/system'
 import { Margin } from '@mui/icons-material'
 
-function Tcomponent() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+function Tcomponent({ isModalOpen, setIsModalOpen }) {
     const [isEditOn, setIsEditOn] = useState(false)
 
     const [titleName, setTitleName] = useState("Teva")
@@ -28,19 +27,11 @@ function Tcomponent() {
     const [worker, setWorker] = useState("eyal moyal")
     const [notes, setNotes] = useState("")
 
-    function editOn() {
-        setIsEditOn(true)
-    }
-
-
-
-
-
     return (
         <div onChange={e => setIsEditOn(true)}>
             <ModalWindow isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} >
 
-                <div>
+                {/* <div>
                     <h1 >{titleName}</h1>
                     <p>Task Description: {DescriptionValue}</p>
                     <p>Task specialization: {specialization}</p>
@@ -76,16 +67,17 @@ function Tcomponent() {
 
 
                     </div>
-                </div>
+                </div> */}
 
-                {/* <div onChange={e => setIsEditOn(true)}>
+                <div>
                     <h1 >{titleName}</h1>
 
                     <div className={styles.edit_fild}>
                         <TextField
                             id="outlined-read-only-input"
                             label="Task Description"
-                            defaultValue={DescriptionValue}
+                            value={DescriptionValue}
+                            onChange={(e) => setDescriptionValue(e.target.value)}
                             style={{ width: "500px" }}
                             InputProps={{
                                 readOnly: false,
@@ -102,7 +94,7 @@ function Tcomponent() {
                         <TextField
                             id="outlined-read-only-input"
                             label="Task specialization"
-                            defaultValue={specialization}
+                            value={specialization}
                             InputProps={{
                                 readOnly: false,
                             }}
@@ -111,7 +103,7 @@ function Tcomponent() {
                         <TextField
                             id="outlined-read-only-input"
                             label="Date"
-                            defaultValue={date}
+                            value={date}
                             type='date'
                             InputProps={{
                                 readOnly: false,
@@ -167,7 +159,7 @@ function Tcomponent() {
 
 
                     </div>
-                </div> */}
+                </div>
 
 
             </ModalWindow >

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 
 import Tcomponent from '../tasks/Tcomponent';
 import AddIcon from '@mui/icons-material/Add';
+import { addNewTask } from '../../lib/firebase/actions';
 
 
 
@@ -14,6 +15,7 @@ const Tasks = () => {
 
 
   const [tasks, setTask] = useState(taskArr)
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
 
@@ -21,7 +23,10 @@ const Tasks = () => {
   return (
     <div>
 
-      <Button style={{ textTransform: 'none' }} variant="contained" startIcon={<AddIcon />}>
+      <Button style={{ textTransform: 'none' }} variant="contained" startIcon={<AddIcon />} onClick={() => {
+        setIsModalOpen(true);
+        // addNewTask();
+      }}>
         New task
       </Button>
 
@@ -41,16 +46,7 @@ const Tasks = () => {
 
 
       <div className='task-cards'>
-        <Tcomponent />
-        <Tcomponent />
-        <Tcomponent />
-        <Tcomponent />
-        <Tcomponent />
-        <Tcomponent />
-        <Tcomponent />
-        <Tcomponent />
-        <Tcomponent />
-        <Tcomponent />
+        <Tcomponent isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       </div>
 
 

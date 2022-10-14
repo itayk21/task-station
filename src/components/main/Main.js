@@ -21,7 +21,7 @@ import Login from '../auth/Login';
 
 
 
-export const Main = () => {
+export const Main = ({ user }) => {
 
     // <BrowserRouter>
     // <Route>
@@ -46,9 +46,9 @@ export const Main = () => {
     return (
         <div className='container'>
             <div className='header'>
-                <Header />
-
+                <Header user={user} />
             </div>
+
             <div className='tabsContainer'>
 
                 <Box sx={{ width: '100%', typography: 'body1' }}>

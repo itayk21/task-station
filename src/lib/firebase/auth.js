@@ -18,3 +18,22 @@ export const logInWithEmailAndPassword = async (email, password) => {
     }
 };
 
+export const registerWithEmailAndPassword = async (email, password) => {
+    try {
+        const response = await createUserWithEmailAndPassword(auth, email, password);
+        return response;
+    } catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
+}
+
+export const disconnect = async () => {
+    try {
+        return await signOut(auth);
+    } catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
+}
+

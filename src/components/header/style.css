@@ -138,5 +138,8 @@ tasks {
         height: 10%;
 
     }
+}
 
+.disconnectButton {
+    color: red !important;
 }

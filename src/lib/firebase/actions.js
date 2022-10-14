@@ -1,5 +1,6 @@
 import { database } from './index';
-import { set, ref } from "firebase/database"
+import { set, ref, get, onValue, update } from "firebase/database"
+import { v4 as uuidv4 } from 'uuid';
 
 /*
     name: string,
@@ -10,10 +11,9 @@ import { set, ref } from "firebase/database"
     notes: array
 */
 
-export const addNewTask = () => {
-    set(ref(database, 'tasks/' + '001'), {
-        test: true,
+export const addNewTask = async (item) => {
+    const debugItem = { name: 'task01', description: 'this is a test task', date: new Date(), time: new Date().getHours(), participants: ["aaa"], specialization: "create" }
 
-    });
-
+    const newId = uuidv4();
+    set(ref(database, 'tasks/' + newId), item || debugItem);
 }
