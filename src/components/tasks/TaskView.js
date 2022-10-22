@@ -7,6 +7,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DropList from './DropList';
 import { updateTask } from '../../lib/firebase/actions';
+import DialogScreen from '../ui-components/DialogScreen';
+import { Done } from '@mui/icons-material';
 
 const statusOptions = [
     {
@@ -28,9 +30,17 @@ const statusOptions = [
 
 ];
 
+
 const TaskView = ({ data, setData, isEdit, setIsEdit }) => {
+    const [open, setOpen] = React.useState(false);
+
+    const isDone = data.status === 'DONE';
+
     return (
         <div>
+            <DialogScreen onSuccessCallback={() => {
+                updateTask(data.id, Object.assign(data, { status: "DONE" }));
+            }} open={open} setOpen={setOpen} title="End Task" message="Do you want to end this task?" />
             {/* To duplicates for all fields from 'data' and onChange for 'setData */}
             {isEdit ? <TextField
                 id="outlined-read-only-input"
@@ -108,19 +118,23 @@ const TaskView = ({ data, setData, isEdit, setIsEdit }) => {
             <TextField
                 id="outlined-multiline-static"
                 label="Notes"
+                inputProps={{
+                    readOnly: !!isDone
+                }}
                 multiline
                 rows={4}
                 style={{ width: "500px" }}
                 value={data.notes}
             />
 
-            <DropList list={statusOptions} defaultValue={data.status || statusOptions[0].value} callback={(statusChanged) => {
+            {/* Status */}
+            {data.status !== 'DONE' && <DropList list={statusOptions} defaultValue={data.status || statusOptions[0].value} callback={(statusChanged) => {
                 updateTask(data.id, Object.assign(data, { status: statusChanged }));
-            }} />
+            }} />}
 
 
 
-            <div className="buttons">
+            {data.status !== 'DONE' && <div className="buttons">
                 <Button variant="contained" endIcon={<EditIcon />} onClick={e => setIsEdit((prevState) => !prevState)}>
                     {isEdit ? "cancel" : "edit"}
                 </Button>
@@ -129,12 +143,11 @@ const TaskView = ({ data, setData, isEdit, setIsEdit }) => {
                     Delete
                 </Button>
 
-                <Button variant="contained" endIcon={<DoneIcon />}>
+                {<Button onClick={() => setOpen(true)} variant="contained" endIcon={<DoneIcon />}>
+                    {console.log(open)}
                     End task
-                </Button>
-
-
-            </div>
+                </Button>}
+            </div>}
         </div>
     )
 }
