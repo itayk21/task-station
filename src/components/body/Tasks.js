@@ -1,64 +1,31 @@
 import { Button } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Tcomponent from '../tasks/Tcomponent';
 import AddIcon from '@mui/icons-material/Add';
-import { addNewTask } from '../../lib/firebase/actions';
+import { addNewTask, findAllTasks } from '../../lib/firebase/actions';
+import styles from './Task.module.css'
+import TasksView from '../tasks/TasksView';
 
 
 
 const Tasks = () => {
+  const data = findAllTasks();
+  const dataAsArray = Object.values(data || {});
 
-  const taskArr = [{ id: "0", title: "task1", decription: "fgfdgfdgdfgdfsgdfgfdgdfgfdg" },
-  { id: "1", title: "task2", decription: "fgfdgfdgdfgdfsgdfgfdgdfgfdg" },
-  { id: "2", title: "task1", decription: "fgfdgfdgdfgdfsgdfgfdgdfgfdg" }]
+  setTimeout(() => {
+    setIsLoaded(true);
+  }, 1500);
 
-
-  const [tasks, setTask] = useState(taskArr)
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
+  if (!isLoaded) {
+    return <p>Loading...</p>
+  }
 
+  return <TasksView data={dataAsArray} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />;
 
-  console.log('here')
-  return (
-    <div>
-
-      <Button style={{ textTransform: 'none' }} variant="contained" startIcon={<AddIcon />} onClick={() => {
-        setIsModalOpen(true);
-        // addNewTask();
-      }}>
-        New task
-      </Button>
-
-      {/* <div className='titleContainer'>
-        <p className='title'>My tasks</p>
-      </div> */}
-
-      <div>
-        {/* {
-        tasks.map((task)=>
-        
-        )
-        } */}
-
-      </div>
-
-
-
-      <div className='task-cards'>
-        <Tcomponent isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-      </div>
-
-
-
-
-
-
-    </div>
-
-
-
-  )
 }
 
 export default Tasks;

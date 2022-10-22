@@ -13,7 +13,7 @@ const Connection = ({ user }) => {
                 <Header user={user} />
             </div>
             <Login />
-            <Register />
+            {/* <Register /> */}
         </div>
     )
 }

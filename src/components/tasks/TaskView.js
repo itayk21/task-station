@@ -1,31 +1,109 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
-import Stack from '@mui/material/Stack';
+import DropList from './DropList';
+import { updateTask } from '../../lib/firebase/actions';
 
-const taskView = () => {
+const statusOptions = [
+    {
+        value: 'TO_DO',
+        label: 'To do',
+    },
+    {
+        value: 'WIP',
+        label: 'Work In Progress',
+    },
+    {
+        value: 'STUCK',
+        label: 'Stuck',
+    },
+    {
+        value: 'ARCHIVED',
+        label: 'Archived',
+    }
 
-    const [titleName, setTitleName] = useState("task1")
-    const [DescriptionValue, setDescriptionValue] = useState("make 100 stikers")
-    const [specialization, setSpecialization] = useState("production")
-    const [date, setDate] = useState("10/09/2022")
-    const [time, setTime] = useState("15:47")
-    const [worker, setWorker] = useState("eyal moyal")
-    const [notes, setNotes] = useState("")
+];
 
+const TaskView = ({ data, setData, isEdit, setIsEdit }) => {
     return (
         <div>
-            <h1 >{titleName}</h1>
-            <p>Task Description: {DescriptionValue}</p>
-            <p>Task specialization: {specialization}</p>
-            <span>
-                <p>End date and time: {date} {time}</p>
-            </span>
-            <p>participants: {worker}</p>
+            {/* To duplicates for all fields from 'data' and onChange for 'setData */}
+            {isEdit ? <TextField
+                id="outlined-read-only-input"
+                label="Enter title name"
+                value={data.titleName}
+                onChange={(e) => setData.setTitleName(e.target.value)}
+                style={{ width: "500px" }}
+                InputProps={{
+                    readOnly: false,
+                }}
+            /> : <h1 >{data.titleName}</h1>}
+
+            {isEdit ? <TextField
+                id="outlined-read-only-input"
+                label="Enter Description"
+                value={data.DescriptionValue}
+                onChange={(e) => setData.setDescriptionValue(e.target.value)}
+                style={{ width: "500px" }}
+                InputProps={{
+                    readOnly: false,
+                }}
+            /> : <p>Task Description: {data.DescriptionValue}</p>}
+
+            <div>
+                {isEdit ? <TextField
+                    id="outlined-read-only-input"
+                    label="Enter specialization"
+                    value={data.specialization}
+                    onChange={(e) => setData.setSpecialization(e.target.value)}
+                    style={{ width: "200px" }}
+                    InputProps={{
+                        readOnly: false,
+                    }}
+                /> : <p>Task specialization: {data.specialization}</p>}
+
+
+                <span>
+
+                    {isEdit ? <TextField
+                        id="outlined-read-only-input"
+                        label="Enter date"
+                        value={data.date}
+                        onChange={(e) => setData.setDate(e.target.value)}
+                        style={{ width: "200px" }}
+                        InputProps={{
+                            readOnly: false,
+                        }}
+                    /> : <p>End date: {data.date}</p>}
+
+                    {isEdit ? <TextField
+                        id="outlined-read-only-input"
+                        label="Enter Time"
+                        value={data.time}
+                        onChange={(e) => setData.setTime(e.target.value)}
+                        style={{ width: "200px" }}
+                        InputProps={{
+                            readOnly: false,
+                        }}
+                    /> : <p>End Time: {data.time}</p>}
+                </span>
+            </div>
+
+            {isEdit ? <TextField
+                id="outlined-read-only-input"
+                label="Enter Workers to this job"
+                value={data.workers}
+                onChange={(e) => setData.setWorkers(e.target.value)}
+                style={{ width: "500px" }}
+                InputProps={{
+                    readOnly: false,
+                }}
+            /> : <p>participants: {data.workers}</p>}
+
 
             <TextField
                 id="outlined-multiline-static"
@@ -33,12 +111,18 @@ const taskView = () => {
                 multiline
                 rows={4}
                 style={{ width: "500px" }}
-                defaultValue={notes}
+                value={data.notes}
             />
 
-            <div className={styles.buttons}>
-                <Button variant="contained" endIcon={<EditIcon />}>
-                    Edit
+            <DropList list={statusOptions} defaultValue={data.status || statusOptions[0].value} callback={(statusChanged) => {
+                updateTask(data.id, Object.assign(data, { status: statusChanged }));
+            }} />
+
+
+
+            <div className="buttons">
+                <Button variant="contained" endIcon={<EditIcon />} onClick={e => setIsEdit((prevState) => !prevState)}>
+                    {isEdit ? "cancel" : "edit"}
                 </Button>
 
                 <Button variant="contained" endIcon={<DeleteIcon />}>
@@ -48,9 +132,11 @@ const taskView = () => {
                 <Button variant="contained" endIcon={<DoneIcon />}>
                     End task
                 </Button>
+
+
             </div>
         </div>
     )
 }
 
-export default taskView
+export default TaskView

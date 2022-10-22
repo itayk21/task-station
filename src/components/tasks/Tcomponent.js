@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react'
 import ModalWindow from './Modal'
 import taskView from './TaskView'
 import styles from './Modal.module.css'
+import { NewTask } from './NewTask'
 
 
 import TextField from '@mui/material/TextField';
@@ -15,158 +16,22 @@ import SaveIcon from '@mui/icons-material/Save';
 import Stack from '@mui/material/Stack';
 import { margin } from '@mui/system'
 import { Margin } from '@mui/icons-material'
+import TaskView from './TaskView'
 
-function Tcomponent({ isModalOpen, setIsModalOpen }) {
-    const [isEditOn, setIsEditOn] = useState(false)
 
-    const [titleName, setTitleName] = useState("Teva")
-    const [DescriptionValue, setDescriptionValue] = useState("make 100 stikers")
-    const [specialization, setSpecialization] = useState("production")
-    const [date, setDate] = useState("10 / 09 / 2022")
-    const [time, setTime] = useState("15:47")
-    const [worker, setWorker] = useState("eyal moyal")
-    const [notes, setNotes] = useState("")
+function Tcomponent({ item, isModalOpen, setIsModalOpen }) {
+    const [isEdit, setIsEdit] = useState(false)
+
+
 
     return (
-        <div onChange={e => setIsEditOn(true)}>
+        <div>
             <ModalWindow isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} >
-
-                {/* <div>
-                    <h1 >{titleName}</h1>
-                    <p>Task Description: {DescriptionValue}</p>
-                    <p>Task specialization: {specialization}</p>
-                    <span>
-                        <p>End date and time: {date} {time}</p>
-                    </span>
-                    <p>participants: {worker}</p>
-
-                    <TextField
-                        id="outlined-multiline-static"
-                        label="Notes"
-                        multiline
-                        rows={4}
-                        style={{ width: "500px" }}
-                        defaultValue={notes}
-                    />
-
-
-
-                    <div className={styles.buttons}>
-                        <Button variant="contained" endIcon={<EditIcon />} onClick={e => editOn(true)}>
-
-                            Edit
-                        </Button>
-
-                        <Button variant="contained" endIcon={<DeleteIcon />}>
-                            Delete
-                        </Button>
-
-                        <Button variant="contained" endIcon={<DoneIcon />}>
-                            End task
-                        </Button>
-
-
-                    </div>
-                </div> */}
-
-                <div>
-                    <h1 >{titleName}</h1>
-
-                    <div className={styles.edit_fild}>
-                        <TextField
-                            id="outlined-read-only-input"
-                            label="Task Description"
-                            value={DescriptionValue}
-                            onChange={(e) => setDescriptionValue(e.target.value)}
-                            style={{ width: "500px" }}
-                            InputProps={{
-                                readOnly: false,
-                            }}
-                        />
-                    </div>
-
-
-
-
-
-                    <div className={styles.edit_fild}>
-
-                        <TextField
-                            id="outlined-read-only-input"
-                            label="Task specialization"
-                            value={specialization}
-                            InputProps={{
-                                readOnly: false,
-                            }}
-                        />
-
-                        <TextField
-                            id="outlined-read-only-input"
-                            label="Date"
-                            value={date}
-                            type='date'
-                            InputProps={{
-                                readOnly: false,
-                            }}
-                        />
-
-
-
-                        <TextField
-                            id="outlined-read-only-input"
-                            label="Time"
-                            defaultValue={time}
-                            type='time'
-                            InputProps={{
-                                readOnly: false,
-                            }}
-                        />
-
-                    </div>
-
-                    <div className={styles.edit_fild}>
-                        <TextField
-                            id="outlined-read-only-input"
-                            label="Participants"
-                            defaultValue={worker}
-                            InputProps={{
-                                readOnly: false,
-                            }}
-                        />
-                    </div>
-
-                    <TextField
-                        id="outlined-multiline-static"
-                        label="Notes"
-                        multiline
-                        rows={4}
-                        style={{ width: "500px" }}
-                        defaultValue={notes}
-                    />
-
-                    <div className={styles.buttons}>
-                        <Button variant="contained" endIcon={<SaveIcon />}>
-                            Save
-                        </Button>
-
-                        <Button variant="contained" endIcon={<DeleteIcon />}>
-                            Delete
-                        </Button>
-
-                        <Button variant="contained" endIcon={<DoneIcon />}>
-                            End task
-                        </Button>
-
-
-                    </div>
-                </div>
-
-
+                <TaskView isEdit={isEdit} setIsEdit={setIsEdit} data={{ titleName, DescriptionValue, specialization, date, time, workers, notes }}
+                    setData={{ setTitleName, setDescriptionValue, setSpecialization, setDate, setTime, setWorkers, setNotes }} />
             </ModalWindow >
 
-
             <div className='card' >
-
                 <div className='titleCardFrame' onClick={e => setIsModalOpen(true)}>
                     <p className='titleCard'>להכין 100 מדבקות</p>
                 </div>

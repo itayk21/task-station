@@ -1,13 +1,8 @@
 import React from 'react';
 import styles from './Modal.module.css'
-import { useRef } from 'react';
-import useOnClickOutside from '../../hooks/useClickOutside';
-import reactDon from 'react-dom'
 
 export default function ModalWindow({ children, isModalOpen = false, setIsModalOpen }) {
-
     return isModalOpen && (
-
         <>
             <div className={styles.overLay}>
                 <div className={styles.container}>

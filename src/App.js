@@ -11,6 +11,7 @@ import Connection from './components/auth/Connection';
 function App() {
   const [user, loading, error] = useAuthState(auth);
 
+
   if (!user) {
     return (<div className="App">
       <Connection user={user} />
