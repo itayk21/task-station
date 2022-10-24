@@ -23,7 +23,8 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
                 setIsEdit(false);
             }} >
 
-                {taskIndex ? <TaskView data={data[parseInt(taskIndex)]} setIsEdit={setIsEdit} isEdit={isEdit} /> : <NewTask />}
+                {/* {taskIndex ? <TaskView data={data[parseInt(taskIndex)]} setIsEdit={setIsEdit} isEdit={isEdit} /> : <NewTask />} */}
+                {taskIndex ? <NewTask isEdit={isEdit} setIsEdit={setIsEdit} data={data[parseInt(taskIndex)]} /> : <NewTask isEdit={true} />}
             </ModalWindow>
 
             <button onClick={() => setIsModalOpen(true)}>New Task</button>
