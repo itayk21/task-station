@@ -23,7 +23,7 @@ const DropList = ({ list, defaultValue, callback }) => {
                 label="Status"
                 value={state}
                 onChange={handleChange}
-                helperText="Please select your currency"
+
             >
                 {list.map((option) => (
                     <MenuItem key={option.value} value={option.value}>

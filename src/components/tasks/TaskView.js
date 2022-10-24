@@ -33,14 +33,25 @@ const statusOptions = [
 
 const TaskView = ({ data, setData, isEdit, setIsEdit }) => {
     const [open, setOpen] = React.useState(false);
+    const [isEndPressed, setIsEndPressed] = useState(false)
+    const [isDisablePressed, setIisDisablePressed] = useState(false)
+
+    const endTaskTitle = "End Task"
+    const endMessage = "Do you want to end this task?"
+    const deleteTitle = "Disable"
+    const disableMessage = "Do you want to disable this task?"
+
 
     const isDone = data.status === 'DONE';
+    const isDisable = data.status === 'DISABLE';
 
     return (
         <div>
             <DialogScreen onSuccessCallback={() => {
                 updateTask(data.id, Object.assign(data, { status: "DONE" }));
-            }} open={open} setOpen={setOpen} title="End Task" message="Do you want to end this task?" />
+            }} open={open} setOpen={setOpen}
+
+                title={endTaskTitle} message={endMessage} />
             {/* To duplicates for all fields from 'data' and onChange for 'setData */}
             {isEdit ? <TextField
                 id="outlined-read-only-input"
@@ -139,7 +150,7 @@ const TaskView = ({ data, setData, isEdit, setIsEdit }) => {
                     {isEdit ? "cancel" : "edit"}
                 </Button>
 
-                <Button variant="contained" endIcon={<DeleteIcon />}>
+                <Button onClick={() => setOpen(true)} variant="contained" endIcon={<DeleteIcon />}>
                     Delete
                 </Button>
 
@@ -148,7 +159,7 @@ const TaskView = ({ data, setData, isEdit, setIsEdit }) => {
                     End task
                 </Button>}
             </div>}
-        </div>
+        </div >
     )
 }
 
