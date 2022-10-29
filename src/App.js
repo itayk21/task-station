@@ -6,7 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./lib/firebase/index"
 import Register from './components/auth/Register';
 import Connection from './components/auth/Connection';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { findUserById } from './lib/firebase/actions';
 
 
@@ -17,7 +17,18 @@ function App() {
   3. put it on a global state
   */
   const [user, loading, error] = useAuthState(auth);
+  const [userData, setUserData] = useState(true);
 
+  useEffect(() => {
+    if (user) {
+      const test = findUserById(user.uid, setUserData);
+      console.log("r", test);
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log("s", userData);
+  }, [userData])
 
   if (!user) {
     return (<div className="App">
@@ -25,13 +36,6 @@ function App() {
     </div>)
   }
 
-  // useEffect(() => {
-  //   if (user) {
-  //     findUserById(user.uid).then((res) => {
-  //       console.log("r", res)
-  //     })
-  //   }
-  // }, [])
 
   return (
     <div className="App">

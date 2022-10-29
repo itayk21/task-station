@@ -11,12 +11,14 @@ import { v4 as uuidv4 } from 'uuid';
     notes: array
 */
 
-export const findUserById = (id) => {
+export const findUserById = (id, setUserData) => {
     const refVal = ref(database, 'users/' + id);
     let response;
 
-    onValue(refVal, (snapshot) => response = snapshot.val());
-
+    onValue(refVal, (snapshot) => {
+        response = snapshot.val()
+        setUserData(response)
+    }, { onlyOnce: true });
     return response;
 }
 

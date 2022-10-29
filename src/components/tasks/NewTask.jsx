@@ -172,7 +172,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                     /> : <div>participants:{worker}</div>}
                 </div>
 
-                {isEdit ? <TextField
+                <TextField
                     id="outlined-multiline-static"
                     label="Notes"
                     value={notes}
@@ -180,8 +180,9 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                     multiline
                     rows={4}
                     style={{ width: "500px" }}
+                    disabled={isDone || isCanceled}
 
-                /> : <div>{notes}</div>}
+                />
 
                 {/* Status */}
                 {!isDone && !isCanceled && data.titleName && <DropList list={statusOptions} defaultValue={data.status || statusOptions[0].value} callback={(statusChanged) => {

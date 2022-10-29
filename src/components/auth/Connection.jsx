@@ -20,7 +20,6 @@ const Connection = ({ user }) => {
                 return;
             }
             const isValid = compareTwoDates(new Date().getTime(), res?.verificationDate)
-            console.log("r", { res, isValid, future: res?.verificationDate, current: new Date().getTime() })
             setIsValidToken(isValid);
         }
     }, [isLoading])
