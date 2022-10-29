@@ -6,9 +6,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./lib/firebase/index"
 import Register from './components/auth/Register';
 import Connection from './components/auth/Connection';
+import { useEffect } from 'react';
+import { findUserById } from './lib/firebase/actions';
 
 
 function App() {
+  /*
+  1. to lookup in DB on users table
+  2. to get the role of the user by the id
+  3. put it on a global state
+  */
   const [user, loading, error] = useAuthState(auth);
 
 
@@ -18,8 +25,15 @@ function App() {
     </div>)
   }
 
-  return (
+  // useEffect(() => {
+  //   if (user) {
+  //     findUserById(user.uid).then((res) => {
+  //       console.log("r", res)
+  //     })
+  //   }
+  // }, [])
 
+  return (
     <div className="App">
       <Main user={user} />
     </div>

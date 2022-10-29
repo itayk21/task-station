@@ -11,6 +11,36 @@ import { v4 as uuidv4 } from 'uuid';
     notes: array
 */
 
+export const findUserById = (id) => {
+    const refVal = ref(database, 'users/' + id);
+    let response;
+
+    onValue(refVal, (snapshot) => response = snapshot.val());
+
+    return response;
+}
+
+export const addNewVerification = async (item) => {
+    const newId = uuidv4();
+    set(ref(database, 'verifications/' + newId), { ...item, id: newId });
+    return newId;
+}
+
+export const findVerificationById = (id) => {
+    const refVal = ref(database, 'verifications/' + id);
+    let response;
+
+    onValue(refVal, (snapshot) => response = snapshot.val());
+
+    return response;
+}
+
+export const addNewUser = async (item, optionalID) => {
+    const newId = optionalID || uuidv4();
+    set(ref(database, 'users/' + newId), { ...item, id: newId });
+    return newId;
+}
+
 export const addNewTask = async (item) => {
     const debugItem = { name: 'task01', description: 'this is a test task', date: new Date(), time: new Date().getHours(), participants: ["aaa"], specialization: "create" }
 

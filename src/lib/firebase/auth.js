@@ -8,6 +8,9 @@ import {
     sendPasswordResetEmail,
     signOut,
 } from "firebase/auth";
+import { addNewUser } from "./actions";
+
+export const getFirebaseAuth = getAuth;
 
 export const logInWithEmailAndPassword = async (email, password) => {
     try {

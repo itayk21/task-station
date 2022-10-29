@@ -103,7 +103,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         InputProps={{
                             readOnly: false,
                         }}
-                    /> : <div>{titleName}</div>}
+                    /> : <div><h1>{titleName}</h1></div>}
                 </div>
                 <div>
                     {isEdit ? <TextField
@@ -115,7 +115,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         InputProps={{
                             readOnly: false,
                         }}
-                    /> : <div>{description}</div>}
+                    /> : <div>task description: {description}</div>}
                 </div>
                 <div>
 
@@ -127,7 +127,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         InputProps={{
                             readOnly: false,
                         }}
-                    /> : <div>{specialization}</div>}
+                    /> : <div>Task specialization:{specialization}</div>}
 
                     {isEdit ? <TextField
                         id="outlined-read-only-input"
@@ -138,7 +138,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         InputProps={{
                             readOnly: false,
                         }}
-                    /> : <div>{date}</div>}
+                    /> : <div>End date:{date}</div>}
 
                     {/* <DateTimePicker
                         renderInput={(props) => <TextField {...props} />}
@@ -156,7 +156,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         InputProps={{
                             readOnly: false,
                         }}
-                    /> : <div>{time}</div>}
+                    /> : <div>End time:{time}</div>}
 
                 </div>
 
@@ -169,7 +169,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         InputProps={{
                             readOnly: false,
                         }}
-                    /> : <div>{worker}</div>}
+                    /> : <div>participants:{worker}</div>}
                 </div>
 
                 {isEdit ? <TextField

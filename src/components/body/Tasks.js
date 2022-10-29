@@ -9,7 +9,7 @@ import TasksView from '../tasks/TasksView';
 
 
 
-const Tasks = () => {
+const Tasks = ({ user }) => {
   const data = findAllTasks();
   const dataAsArray = Object.values(data || {});
 

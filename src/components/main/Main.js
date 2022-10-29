@@ -17,6 +17,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import Login from '../auth/Login';
+import AddUser from '../users/AddUser';
 
 
 
@@ -58,16 +59,20 @@ export const Main = ({ user }) => {
                                 <Tab label="WORKERS" icon={<EngineeringIcon className='worker' />} value="1" />
                                 <Tab label="TASKS" icon={<TaskAltIcon className='task' />} value="2" />
                                 <Tab label="MAIL" icon={<EmailIcon className='mail-logo' />} value="3" />
+                                <Tab label="ADD USER" icon={<EmailIcon className='mail-logo' />} value="4" />
                             </TabList>
                         </Box>
                         <TabPanel value="1">
                             <Active_workers />
                         </TabPanel>
                         <TabPanel value="2">
-                            <Tasks />
+                            <Tasks user={user} />
                         </TabPanel>
                         <TabPanel value="3">
                             <Contact />
+                        </TabPanel>
+                        <TabPanel value="4">
+                            <AddUser />
                         </TabPanel>
                     </TabContext>
                 </Box>
