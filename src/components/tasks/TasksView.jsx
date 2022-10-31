@@ -28,7 +28,7 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
             </ModalWindow>
 
             <button onClick={() => setIsModalOpen(true)}>New Task</button>
-            <div style={{ display: "flex" }}>{renderTasks}</div>
+            <div style={{ display: "flex", flexWrap: "wrap" }}>{renderTasks}</div>
         </>
     )
 }

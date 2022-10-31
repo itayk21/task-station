@@ -29,11 +29,20 @@
     width: 100%;
 }
 
+/*
+rgb(0, 157, 255) - blue  todo
+rgb(27, 232, 106) -green done
+ rgb(13, 241, 89) - yellow  work in progress
+orange - 3 hours before done
+red - time out
+rgb(13, 74, 241) - blue stuck
 
+
+*/
 
 .titleCardFrame {
-    border-color: black;
-    background-color: aqua;
+    border-color: rgb(183, 187, 71);
+    background-color: rgb(200, 214, 13);
     height: 23%;
     width: 100%;
     cursor: pointer;
@@ -117,12 +126,9 @@
 }
 
 
-
-
-
-tasks {
+/* .tasks {
     background-color: chartreuse;
-}
+} */
 
 @media only screen and (max-width: 600px) {
     .css-heg063-MuiTabs-flexContainer {
@@ -144,4 +150,24 @@ tasks {
     margin-bottom: 5px;
     border-radius: 5px;
     box-shadow: 1px 1px black;
+}
+
+.status_done {
+    background-color: #cbf078;
+}
+
+.status_to_do {
+    background-color: #bbe4e9;
+}
+
+.status_wip {
+    background-color: #e0ffcd;
+}
+
+.status_undefined {
+    background-color: pink;
+}
+
+.status_canceled {
+    background-color: #ff847c;
 }
