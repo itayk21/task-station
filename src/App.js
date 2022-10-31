@@ -22,12 +22,19 @@ function App() {
   useEffect(() => {
     if (user) {
       const test = findUserById(user.uid, setUserData);
-      console.log("r", test);
     }
   }, [])
 
   useEffect(() => {
-    console.log("s", userData);
+    const userUID = user?.uid;
+    if (userUID) {
+      // fetch user from database
+      findUserById(userUID, setUserData);
+    }
+  }, [user])
+
+  useEffect(() => {
+    console.log("[debug]", userData.role)
   }, [userData])
 
   if (!user) {
@@ -35,7 +42,6 @@ function App() {
       <Connection user={user} />
     </div>)
   }
-
 
   return (
     <div className="App">

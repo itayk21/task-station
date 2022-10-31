@@ -13,13 +13,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const findUserById = (id, setUserData) => {
     const refVal = ref(database, 'users/' + id);
-    let response;
 
     onValue(refVal, (snapshot) => {
-        response = snapshot.val()
-        setUserData(response)
+        let response = snapshot.val()
+        setUserData(response);
+        return response;
     }, { onlyOnce: true });
-    return response;
 }
 
 export const addNewVerification = async (item) => {
