@@ -6,9 +6,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./lib/firebase/index"
 import Register from './components/auth/Register';
 import Connection from './components/auth/Connection';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { findUserById } from './lib/firebase/actions';
 
+export const UserContext = createContext();
 
 function App() {
   /*
@@ -17,35 +18,34 @@ function App() {
   3. put it on a global state
   */
   const [user, loading, error] = useAuthState(auth);
-  const [userData, setUserData] = useState(true);
+  const [userData, setUserData] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      const test = findUserById(user.uid, setUserData);
-    }
-  }, [])
-
-  useEffect(() => {
+    // user UID that we are getting from firebase SDK
     const userUID = user?.uid;
+
     if (userUID) {
-      // fetch user from database
+      // when we having the user UID,
+      // we fetching to see his data from database
       findUserById(userUID, setUserData);
     }
-  }, [user])
+  }, [user]);
 
-  useEffect(() => {
-    console.log("[debug]", userData.role)
-  }, [userData])
-
-  if (!user) {
+  // If there is no user data, or user role value
+  // redirect them to login page.
+  if (!user || !userData.role) {
     return (<div className="App">
       <Connection user={user} />
     </div>)
   }
 
+  // otherwise,
+  // show them our main controller route.
   return (
     <div className="App">
-      <Main user={user} />
+      <UserContext.Provider value={userData.role}>
+        <Main user={user} />
+      </UserContext.Provider>
     </div>
   );
 }

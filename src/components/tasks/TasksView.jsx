@@ -1,17 +1,28 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import TaskCard from './TaskCard';
 import ModalWindow from './Modal';
 import { NewTask } from './NewTask';
 import TaskView from './TaskView';
+import { UserContext } from '../../App';
 
 const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
+    const userRole = useContext(UserContext);
+
     const onClickTitle = (idx) => {
         setIsModalOpen(true);
         setTaskIndex(idx);
     }
 
-    const renderTasks = data.map((item, idx) => <TaskCard key={idx.toString()} data={item}
-        onClickTitle={() => onClickTitle(idx.toString())} />);
+    const renderTasks = data.map((item, idx) => {
+        switch (userRole) {
+            case 'unverified':
+                return;
+            default:
+                return <TaskCard key={idx.toString()} data={item}
+                    onClickTitle={() => onClickTitle(idx.toString())} />
+        }
+    });
+
     const [taskIndex, setTaskIndex] = useState(null);
     const [isEdit, setIsEdit] = useState(false);
 
