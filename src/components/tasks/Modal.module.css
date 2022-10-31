@@ -1,5 +1,6 @@
 .container {
-    height: 500px;
+    height: max-content;
+    padding: 30px;
     width: 800px;
     background: white;
     position: fixed;

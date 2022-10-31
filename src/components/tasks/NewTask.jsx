@@ -92,8 +92,8 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
             }} open={open} setOpen={setOpen}
                 title={isEndTaskMode ? CONSTANTS.END_TASK_TITLE : CONSTANTS.DISABLE_TITLE} message={isEndTaskMode ? CONSTANTS.END_TASK_MSG : CONSTANTS.DISABLE_MSG} />
 
-            <div>
-                <div>
+            <div className="task_action_container">
+                <div className='task_title_container'>
                     {isEdit ? <TextField
                         id="outlined-read-only-input"
                         label="Task Description"
@@ -115,7 +115,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         InputProps={{
                             readOnly: false,
                         }}
-                    /> : <div>task description: {description}</div>}
+                    /> : <><div>Description:</div><div>{description}</div></>}
                 </div>
                 <div>
 
@@ -127,7 +127,9 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         InputProps={{
                             readOnly: false,
                         }}
-                    /> : <div>Task specialization:{specialization}</div>}
+                    /> : <><div>Specialization:</div><div>{specialization}</div></>}
+                </div>
+                <div>
 
                     {isEdit ? <TextField
                         id="outlined-read-only-input"
@@ -168,9 +170,14 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         onChange={(e) => setWorker(e.target.value)}
                         InputProps={{
                             readOnly: false,
-                        }}
-                    /> : <div>participants:{worker}</div>}
+                        }} s
+                    /> : <><div>Parcitipants:</div><div>{worker}</div></>}
                 </div>
+
+                {/* Status */}
+                {!isDone && !isCanceled && data.titleName && <DropList list={statusOptions} defaultValue={data.status || statusOptions[0].value} callback={(statusChanged) => {
+                    updateTask(data.id, Object.assign(data, { status: statusChanged }));
+                }} />}
 
                 <TextField
                     id="outlined-multiline-static"
@@ -184,10 +191,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
 
                 />
 
-                {/* Status */}
-                {!isDone && !isCanceled && data.titleName && <DropList list={statusOptions} defaultValue={data.status || statusOptions[0].value} callback={(statusChanged) => {
-                    updateTask(data.id, Object.assign(data, { status: statusChanged }));
-                }} />}
+
 
                 <div>
                     {!data.titleName && <Button variant="contained" endIcon={<SaveIcon />} onClick={e => onSubmit()}>
