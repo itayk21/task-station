@@ -1,6 +1,7 @@
 //import { getAuth } from 'firebase/auth'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Route, Router } from "react-router-dom"
+import { UserContext } from '../../App'
 //import { getFirebaseAuth } from '../../lib/firebase/auth'
 
 /*
@@ -16,21 +17,14 @@ user: update tasks only, mail
 */
 
 const Active_workers = () => {
-  // getAuth()
-  //   .getUser('XMEwSC8j8DPDnobOckncHB9N0Pp1')
-  //   .then((userRecord) => {
-  //     // See the UserRecord reference doc for the contents of userRecord.
-  //     console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
-  //   })
-  //   .catch((error) => {
-  //     console.log('Error fetching user data:', error);
-  //   });
 
 
   return (
     <>
-
       <div>Active workers</div>
+      <ul>
+        <li>user1 | V | X</li>
+      </ul>
     </>
   )
 }

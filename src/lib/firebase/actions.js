@@ -11,6 +11,22 @@ import { v4 as uuidv4 } from 'uuid';
     notes: array
 */
 
+export const findAllUsersUnverified = (setUnverified) => {
+    const refVal = ref(database, 'users/');
+
+    onValue(refVal, (snapshot) => {
+        let response = snapshot.val()
+        let values = Object.values(response);/* turn to arrays */
+        if (values.length) { /* length > 0 */
+            values = values.filter((user) => {
+                return user.role === 'unverified'
+            })
+            setUnverified(values);
+        }
+        return response;
+    }, { onlyOnce: true });
+}
+
 export const findUserById = (id, setUserData) => {
     const refVal = ref(database, 'users/' + id);
 

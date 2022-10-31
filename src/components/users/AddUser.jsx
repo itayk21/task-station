@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { generateFutureDate } from '../../lib/date'
-import { addNewUser, addNewVerification } from '../../lib/firebase/actions'
+import { addNewUser, addNewVerification, findAllUsersUnverified } from '../../lib/firebase/actions'
 
 
 /**
@@ -12,7 +12,9 @@ import { addNewUser, addNewVerification } from '../../lib/firebase/actions'
  */
 
 const AddUser = () => {
-    const [link, setLink] = useState(window.location.search)
+    const [link, setLink] = useState(window.location.search);
+    const [unverified, setUnverified] = useState([]);
+    console.log(unverified)
 
     const onClickSubmit = async () => {
         const id = await addNewVerification({
@@ -22,11 +24,43 @@ const AddUser = () => {
         setLink(id);
     }
 
+    const onClickApprove = (id) => {
+        console.log(id)
+    }
+
+    const onClick = (id) => {
+        console.log(id)
+    }
+
+    useEffect(() => {
+        findAllUsersUnverified(setUnverified)
+    }, []);
+
+    useEffect(() => {
+        console.log("[debug]", unverified)
+    }, [unverified])
+
+    const headers = ['User email', 'UID', 'status']
+
     return (
         <div>
             <button onClick={onClickSubmit}>Create new link</button>
             <p>{JSON.stringify(link)}</p>
-        </div>
+            <div>Active workers</div>
+            <ul>
+                {unverified.map((user) => <li id={user.id}>{user.email} | <span onClick={() => onClickApprove(user.id)}>V</span> | <span>X</span></li>)}
+            </ul>
+            <table>
+                <tr>
+                    {headers.map((item) => <th>{item}</th>)}
+                </tr>
+                <tr>
+                    {unverified.map((user) => {
+                        return <>{Object.values(user).map((item) => <th>{item}</th>)}</>
+                    })}
+                </tr>
+            </table>
+        </div >
     )
 }
 
