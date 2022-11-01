@@ -2,14 +2,10 @@ import { database } from './index';
 import { set, ref, get, onValue, update } from "firebase/database"
 import { v4 as uuidv4 } from 'uuid';
 
-/*
-    name: string,
-    description: string,
-    date: date,
-    participants: array,
-    specialization: string,
-    notes: array
-*/
+export const updateUserRole = (obj, role) => {
+    console.log({ ...obj, role })
+    set(ref(database, 'users/' + obj.id), { ...obj, role });
+}
 
 export const findAllUsersUnverified = (setUnverified) => {
     const refVal = ref(database, 'users/');

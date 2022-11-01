@@ -57,7 +57,7 @@ export const Main = ({ user }) => {
             </div>
 
             <div className='tabsContainer'>
-                {userData.role !== "unverified" ?
+                {userData.role !== "unverified" && userData.role !== "canceled" ?
                     <Box sx={{ width: '100%', typography: 'body1' }}>
                         <TabContext value={value}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -81,7 +81,7 @@ export const Main = ({ user }) => {
                                 <AddUser />
                             </TabPanel>
                         </TabContext>
-                    </Box> : <div>You need to be verified </div>}
+                    </Box> : <div>{userData.role === "canceled" ? "This account is disabled." : "You need to be verified"}  </div>}
 
 
             </div>
