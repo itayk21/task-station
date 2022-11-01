@@ -18,11 +18,17 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import Login from '../auth/Login';
 import AddUser from '../users/AddUser';
+import { UserContext } from '../../App';
+
+
+import { useContext } from 'react';
 
 
 
 
 export const Main = ({ user }) => {
+
+    const userData = useContext(UserContext);
 
     // <BrowserRouter>
     // <Route>
@@ -51,31 +57,31 @@ export const Main = ({ user }) => {
             </div>
 
             <div className='tabsContainer'>
-
-                <Box sx={{ width: '100%', typography: 'body1' }}>
-                    <TabContext value={value}>
-                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                            <TabList onChange={handleChange} aria-label="lab API tabs example">
-                                <Tab label="WORKERS" icon={<EngineeringIcon className='worker' />} value={1} />
-                                <Tab label="TASKS" icon={<TaskAltIcon className='task' />} value={2} />
-                                <Tab label="MAIL" icon={<EmailIcon className='mail-logo' />} value={3} />
-                                <Tab label="ADD USER" icon={<EmailIcon className='mail-logo' />} value={4} />
-                            </TabList>
-                        </Box>
-                        <TabPanel value={1}>
-                            <Active_workers />
-                        </TabPanel>
-                        <TabPanel value={2}>
-                            <Tasks user={user} />
-                        </TabPanel>
-                        <TabPanel value={3}>
-                            <Contact />
-                        </TabPanel>
-                        <TabPanel value={4}>
-                            <AddUser />
-                        </TabPanel>
-                    </TabContext>
-                </Box>
+                {userData.role !== "unverified" ?
+                    <Box sx={{ width: '100%', typography: 'body1' }}>
+                        <TabContext value={value}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <TabList onChange={handleChange} aria-label="lab API tabs example">
+                                    <Tab label="WORKERS" icon={<EngineeringIcon className='worker' />} value={1} />
+                                    <Tab label="TASKS" icon={<TaskAltIcon className='task' />} value={2} />
+                                    <Tab label="MAIL" icon={<EmailIcon className='mail-logo' />} value={3} />
+                                    <Tab label="ADD USER" icon={<EmailIcon className='mail-logo' />} value={4} />
+                                </TabList>
+                            </Box>
+                            <TabPanel value={1}>
+                                <Active_workers />
+                            </TabPanel>
+                            <TabPanel value={2}>
+                                <Tasks user={user} />
+                            </TabPanel>
+                            <TabPanel value={3}>
+                                <Contact />
+                            </TabPanel>
+                            <TabPanel value={4}>
+                                <AddUser />
+                            </TabPanel>
+                        </TabContext>
+                    </Box> : <div>You need to be verified </div>}
 
 
             </div>

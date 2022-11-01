@@ -7,8 +7,6 @@
     margin-left: 20%;
     margin-top: 5%;
     box-shadow: 2px 2px#2a41ed;
-
-
 }
 
 
@@ -22,7 +20,6 @@
     margin: 5px;
     border-radius: 5px;
     margin: 10px;
-
 }
 
 
@@ -42,7 +39,16 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.BtLogin:hover {
-    background: #4156f2;
-    color: white;
+.registerData {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.inputContainer {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    font-size: 20px;
 }

@@ -36,20 +36,12 @@ const AddUser = () => {
         findAllUsersUnverified(setUnverified)
     }, []);
 
-    useEffect(() => {
-        console.log("[debug]", unverified)
-    }, [unverified])
-
     const headers = ['User email', 'UID', 'status']
 
     return (
         <div>
             <button onClick={onClickSubmit}>Create new link</button>
-            <p>{JSON.stringify(link)}</p>
-            <div>Active workers</div>
-            <ul>
-                {unverified.map((user) => <li id={user.id}>{user.email} | <span onClick={() => onClickApprove(user.id)}>V</span> | <span>X</span></li>)}
-            </ul>
+            <p>{link && JSON.stringify(link)}</p>
             <table>
                 <tr>
                     {headers.map((item) => <th>{item}</th>)}

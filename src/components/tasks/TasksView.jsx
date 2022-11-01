@@ -14,7 +14,7 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
     }
 
     const renderTasks = data.map((item, idx) => {
-        switch (userRole) {
+        switch (userRole?.role) {
             case 'unverified':
                 return;
             default:

@@ -43,7 +43,7 @@ function App() {
   // show them our main controller route.
   return (
     <div className="App">
-      <UserContext.Provider value={userData.role}>
+      <UserContext.Provider value={userData}>
         <Main user={user} />
       </UserContext.Provider>
     </div>

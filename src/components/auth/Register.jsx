@@ -2,25 +2,49 @@ import { Button } from '@mui/material'
 import React, { useState } from 'react'
 import { addNewUser } from '../../lib/firebase/actions'
 import { logInWithEmailAndPassword, registerWithEmailAndPassword } from '../../lib/firebase/auth'
+import styles from './Auth.module.css'
 
 const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [name, setName] = useState("")
+    const [dateOfBirth, setDateOfBirth] = useState("")
+    const [phoneNumber, setPhoneNumber] = useState("")
 
     const onSubmit = async () => {
         const res = await registerWithEmailAndPassword(email, password);
-        addNewUser({ email: res.user.email, role: 'unverified' }, res.user.uid);
+        addNewUser({ email: res.user.email, role: 'unverified', name, dateOfBirth, phoneNumber }, res.user.uid);
     }
 
     return (
         <div>
-            <div>
-                <p>Register</p>
-                <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-                <Button onClick={() => onSubmit()}>Register</Button>
+            <div className={styles.registerData}>
+                <h1>Join Us To Work Beter</h1>
+                <div className={styles.inputContainer}>
+                    <label>Email: </label>
+                    <input type="email" placeholder=' aaa@gmail.com' value={email} onChange={e => setEmail(e.target.value)} />
+                    <label>Password: </label>
+                    <input type="password" placeholder='please enter password' value={password} onChange={e => setPassword(e.target.value)} />
+                </div>
+
+                <div className={styles.inputContainer}>
+                    <label>Name: </label>
+                    <input type="text" placeholder='full name' value={name} onChange={e => setName(e.target.value)} />
+
+                    <label>Date of Birth: </label>
+                    <input type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} />
+                </div>
+
+                <div className={styles.inputContainer}>
+                    <label>Phone Number: </label>
+                    <input type="tel" placeholder='plase enter your number' value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
+                </div>
+
+                <div className={styles.inputContainer}>
+                    <Button variant="contained" onClick={() => onSubmit()}>Register</Button>
+                </div>
             </div>
-        </div>
+        </div >
     )
 }
 
