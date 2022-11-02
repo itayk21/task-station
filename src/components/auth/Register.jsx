@@ -1,10 +1,10 @@
 import { Button } from '@mui/material'
 import React, { useState } from 'react'
-import { addNewUser } from '../../lib/firebase/actions'
+import { addNewUser, removeVerification } from '../../lib/firebase/actions'
 import { logInWithEmailAndPassword, registerWithEmailAndPassword } from '../../lib/firebase/auth'
 import styles from './Auth.module.css'
 
-const Register = () => {
+const Register = ({ verificationId }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
@@ -14,6 +14,7 @@ const Register = () => {
     const onSubmit = async () => {
         const res = await registerWithEmailAndPassword(email, password);
         addNewUser({ email: res.user.email, role: 'unverified', name, dateOfBirth, phoneNumber }, res.user.uid);
+        removeVerification(verificationId);
     }
 
     return (
