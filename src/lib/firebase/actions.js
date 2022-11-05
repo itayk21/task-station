@@ -6,8 +6,30 @@ export const removeVerification = (id) => {
     ref(database, 'verifications/' + id).remove();
 }
 
+export const updateUserWorkStatus = (obj, work_status) => {
+    set(ref(database, 'users/' + obj.id), { ...obj, work_status, last_work_status: Date.now() });
+}
+
 export const updateUserRole = (obj, role) => {
     set(ref(database, 'users/' + obj.id), { ...obj, role });
+}
+
+export const findAllUsers = (setUsers) => {
+    const refVal = ref(database, 'users/');
+    let response;
+
+    onValue(refVal, (snapshot) => {
+        response = snapshot.val()
+        let values = Object.values(response); // turn to array
+        if (values.length) { /* length > 0 */
+            // values = values.filter((user) => {
+            //     return user.work_status !== null
+            // })
+            setUsers(values);
+        }
+    }, { onlyOnce: true });
+
+    return response;
 }
 
 export const findAllUsersUnverified = (setUnverified) => {
@@ -15,7 +37,7 @@ export const findAllUsersUnverified = (setUnverified) => {
 
     onValue(refVal, (snapshot) => {
         let response = snapshot.val()
-        let values = Object.values(response);/* turn to arrays */
+        let values = Object.values(response); // turn to array
         if (values.length) { /* length > 0 */
             values = values.filter((user) => {
                 return user.role === 'unverified'
@@ -72,6 +94,8 @@ export const findAllTasks = () => {
 
     return response;
 }
+
+
 
 export const updateTask = (id, obj) => {
     set(ref(database, 'tasks/' + id), obj);

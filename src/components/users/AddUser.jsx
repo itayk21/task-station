@@ -64,8 +64,8 @@ const AddUser = () => {
             </div>
 
             <div>
-                <input className={styles.input_link} type="text" placeholder='please enter number' value={numberToSend}
-                    onChange={(e) => setNumberToSend(e.target.value)} />
+                <input className={styles.input_link} type="text" placeholder='please enter number'
+                    value={numberToSend} onChange={(e) => setNumberToSend(e.target.value)} />
                 <a className={`${styles.button_space} ${styles.button}`} target={'_blank'}
                     href={`https://api.whatsapp.com/send?phone=972${numberToSend.substring(1)}&text=${link}`}
                 > <FaWhatsapp />  </a>

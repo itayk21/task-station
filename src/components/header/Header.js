@@ -1,13 +1,33 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import styles from './style.css'
 import logo from '../../assets/images/logo2.png'
 import { Button } from '@mui/material'
 import { disconnect } from '../../lib/firebase/auth'
 import { UserContext } from '../../App'
+import DropList from '../tasks/DropList';
+import { updateUserWorkStatus } from '../../lib/firebase/actions'
+
+const statusList = [{
+    value: 'UNAVAILABLE',
+    label: 'Unavailable'
+}, {
+    value: 'ONLINE',
+    label: 'Online'
+}, {
+    value: 'BREAK',
+    label: 'Break',
+}];
 
 export const Header = ({ user }) => {
 
     const userData = useContext(UserContext);
+    const [selectValue, setSelectValue] = useState('');
+
+    const onStatusChange = (e) => {
+        setSelectValue(e.target.value);
+        updateUserWorkStatus(userData, e.target.value);
+        console.log("userData", userData)
+    }
 
     return (
         <div className='header'>
@@ -17,6 +37,11 @@ export const Header = ({ user }) => {
                 <button className='disconnectButton' onClick={() => {
                     disconnect()
                 }}>Disconect {userData.name}</button>
+
+                <select onChange={onStatusChange} value={selectValue}>
+                    {statusList.map((item) => <option value={item.value}>{item.label}</option>
+                    )}
+                </select>
             </div>}
 
         </div>
