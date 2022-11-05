@@ -18,6 +18,7 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import Login from '../auth/Login';
 import AddUser from '../users/AddUser';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import { UserContext } from '../../App';
 
 
@@ -65,7 +66,7 @@ export const Main = ({ user }) => {
                                     <Tab label="WORKERS" icon={<EngineeringIcon className='worker' />} value={1} />
                                     <Tab label="TASKS" icon={<TaskAltIcon className='task' />} value={2} />
                                     <Tab label="MAIL" icon={<EmailIcon className='mail-logo' />} value={3} />
-                                    <Tab label="ADD USER" icon={<EmailIcon className='mail-logo' />} value={4} />
+                                    <Tab label="ADD USER" icon={<GroupAddIcon className='addUser' />} value={4} />
                                 </TabList>
                             </Box>
                             <TabPanel value={1}>

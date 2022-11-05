@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { generateFutureDate } from '../../lib/date'
 import { addNewUser, addNewVerification, findAllUsersUnverified, updateUserRole } from '../../lib/firebase/actions'
 import styles from './AddUser.module.css'
+import { FaWhatsapp } from 'react-icons/fa';
 
 /**
  * 
@@ -63,9 +64,13 @@ const AddUser = () => {
             </div>
 
             <div>
-                <input type="text" placeholder='please enter number' value={numberToSend}
+                <input className={styles.input_link} type="text" placeholder='please enter number' value={numberToSend}
                     onChange={(e) => setNumberToSend(e.target.value)} />
-                <a className={`${styles.button_space} ${styles.button}`} target={'_blank'} href={`https://api.whatsapp.com/send?phone=972${numberToSend.substring(1)}&text=${link}`}     >Send whatstapp - &#xf232;</a>
+                <a className={`${styles.button_space} ${styles.button}`} target={'_blank'}
+                    href={`https://api.whatsapp.com/send?phone=972${numberToSend.substring(1)}&text=${link}`}
+                > <FaWhatsapp />  </a>
+
+
             </div>
 
             <div className={styles.table}>
@@ -79,8 +84,9 @@ const AddUser = () => {
                         {unverified.map((user) => {
                             return <tr>
                                 {Object.values(user).map((item) => <td>{item}</td>)}
-                                <td><button onClick={() => onClickApprove(user)}>&#10003;</button>
-                                    <button onClick={() => onClickCancel(user)}>&#128473;</button></td>
+                                <td><button className={styles.approve} onClick={() => onClickApprove(user)}>&#10003;</button>
+                                    <button className={styles.cancel} onClick={() => onClickCancel(user)}>&#128473;</button></td>
+
                             </tr>
                         })}
                     </tbody>
