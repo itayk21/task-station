@@ -9,6 +9,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import { addNewTask, updateTask } from '../../lib/firebase/actions';
 import DialogScreen from '../ui-components/DialogScreen';
 import DropList from './DropList';
+import MultipleSelection from '../ui-components/MultipleSelection';
 
 const statusOptions = [
     {
@@ -83,7 +84,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
 
     const isEndTaskMode = action === 'END_TASK';
     const isDone = data.status === 'DONE';
-    const isCanceled = data.status === 'CANCELED'
+    const isCanceled = data.status === 'CANCELED';
 
     return (
         <div>
@@ -163,15 +164,15 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                 </div>
 
                 <div>
-                    {isEdit ? <TextField
+                    {isEdit ? <><TextField
                         id="outlined-read-only-input"
                         label="Participants"
                         value={worker}
                         onChange={(e) => setWorker(e.target.value)}
                         InputProps={{
                             readOnly: false,
-                        }} s
-                    /> : <><div>Parcitipants:</div><div>{worker}</div></>}
+                        }}
+                    /><MultipleSelection /></> : <><div>Parcitipants:</div><div>{worker}</div></>}
                 </div>
 
                 {/* Status */}
