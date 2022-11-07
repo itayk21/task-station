@@ -37,6 +37,7 @@ const Active_workers = () => {
   }
 
   useEffect(() => {
+    findAllUsers(setUsers);
     const findInterval = setInterval(() => {
       findAllUsers(setUsers)
     }, 3000);
@@ -52,7 +53,7 @@ const Active_workers = () => {
 
   return (
 
-    <div>
+    <div className={styles.tablePlace}>
       <div className={styles.table}>
         <table>
           <thead>
@@ -69,13 +70,14 @@ const Active_workers = () => {
 
               user = returnByValues(user, ['last_work_status', 'name', 'work_status']);
               const date = new Date(user.last_work_status)
-              const minute = date.getMinutes();
-              let hour = date.getHours();
-
               user.last_work_status = format(date, "hh:mm")
 
               return <tr>
-                {Object.values(user).map((item) => {
+                {Object.values(user).map((item, idx) => {
+
+                  if (idx === 2) {
+                    return <td className={`option_${user.work_status.toLowerCase()}`}>{item}</td>
+                  }
 
                   return <td>{item}</td>
                 })}
