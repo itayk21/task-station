@@ -64,7 +64,7 @@ const Active_workers = () => {
           <tbody>
             {users.map((user) => {
 
-              if (user.status === 'canceled' || !user.work_status) {
+              if (user.status === 'canceled' || !user.work_status || user.work_status === 'OFFLINE') {
                 return;
               }
 

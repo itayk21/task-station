@@ -55,7 +55,7 @@ export const Header = ({ user }) => {
                     )}
                 </select>
 
-                <button onClick={toggleWorkStatus}>Logout work</button>
+                <button onClick={toggleWorkStatus}>{selectValue === 'OFFLINE' ? "Login work" : "Logout work"}</button>
             </div>}
 
         </div>
