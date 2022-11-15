@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { findAllUsers } from '../../lib/firebase/actions';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -10,6 +11,11 @@ import { addNewTask, updateTask } from '../../lib/firebase/actions';
 import DialogScreen from '../ui-components/DialogScreen';
 import DropList from './DropList';
 import MultipleSelection from '../ui-components/MultipleSelection';
+import { format } from 'date-fns';
+
+// TODO: To find a way to import TimePicker and see the result (we already used it)
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+// END TODO
 
 const statusOptions = [
     {
@@ -32,6 +38,11 @@ const availableActions = {
 }
 
 export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
+
+
+    const currentTime = new Date();
+    const currentTimeWithFormat = format(currentTime, 'yyyy-MM-dd');
+
     const [open, setOpen] = React.useState(false);
 
     const [action, setAction] = useState(availableActions.END_TASK)
@@ -41,8 +52,20 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
     const [specialization, setSpecialization] = useState(data.specialization || "")
     const [date, setDate] = useState(data.date || "")
     const [time, setTime] = useState(data.time || "")
-    const [worker, setWorker] = useState(data.worker || "")
     const [notes, setNotes] = useState(data.notes || "")
+
+    const [participants, setParticipants] = useState(data.participants || []);
+    const [selectedParticipants, setSelectedParticipants] = useState([]);
+
+    const filteredParticipants = participants.length && participants?.filter((participant) => {
+        return participant.role === 'user'
+    }) || []
+
+    useEffect(() => {
+        if (!participants.length) {
+            findAllUsers(setParticipants)
+        }
+    }, [])
 
     const generateTaskData = () => {
         return {
@@ -53,10 +76,11 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
             specialization,
             date,
             time,
-            worker,
+            participants: selectedParticipants,
             notes,
         }
     }
+
 
     const resetStates = () => {
         setTitleName(data.titleName || "")
@@ -64,13 +88,13 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
         setSpecialization(data.specialization || "")
         setDate(data.date || "")
         setTime(data.time || "")
-        setWorker(data.worker || "")
+        setParticipants(data.participants || "")
         setNotes(data.notes || "")
     }
 
     const onSubmit = () => {//send to database
         addNewTask({
-            titleName, description, specialization, date, time, worker, notes
+            titleName, description, specialization, date, time, participants: selectedParticipants, notes
         })
         resetStates()
     }
@@ -85,6 +109,14 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
     const isEndTaskMode = action === 'END_TASK';
     const isDone = data.status === 'DONE';
     const isCanceled = data.status === 'CANCELED';
+
+    const participantsContainer = !!participants.length && (<>
+        <ol>
+            {participants?.map((participant) => {
+                return <li>{JSON.stringify(participant)}</li>
+            })}
+        </ol>
+    </>)
 
     return (
         <div>
@@ -132,16 +164,27 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                 </div>
                 <div>
 
-                    {isEdit ? <TextField
-                        id="outlined-read-only-input"
-                        label="Date"
+                    {isEdit ? <><TimePicker
+                        ampm={false}
+                        openTo="hours"
+                        views={['hours', 'minutes', 'seconds']}
+                        inputFormat="HH:mm:ss"
+                        mask="__:__:__"
+                        label="With seconds"
                         value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        type='date'
-                        InputProps={{
-                            readOnly: false,
+                        onChange={(newValue) => {
+                            setDate(newValue);
                         }}
-                    /> : <div>End date:{date}</div>}
+                        renderInput={(params) => <TextField {...params} />}
+                    /><TextField
+                            id="outlined-read-only-input"
+                            label="Date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                            type='date'
+                            inputFormat="DD-MM-YYYY"
+                            inputProps={{ min: currentTimeWithFormat, max: "2025-01-01", readOnly: false, }}
+                        /></> : <div>End date:{date}</div>}
 
                     {/* <DateTimePicker
                         renderInput={(props) => <TextField {...props} />}
@@ -164,15 +207,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                 </div>
 
                 <div>
-                    {isEdit ? <><TextField
-                        id="outlined-read-only-input"
-                        label="Participants"
-                        value={worker}
-                        onChange={(e) => setWorker(e.target.value)}
-                        InputProps={{
-                            readOnly: false,
-                        }}
-                    /><MultipleSelection /></> : <><div>Parcitipants:</div><div>{worker}</div></>}
+                    {isEdit ? <><MultipleSelection label="Workers Names:" names={filteredParticipants} setSelectedParticipants={setSelectedParticipants} selectedParticipants={selectedParticipants} /></> : <><div>Parcitipants:</div><div>{participantsContainer}</div></>}
                 </div>
 
                 {/* Status */}

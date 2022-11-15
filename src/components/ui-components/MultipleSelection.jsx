@@ -8,6 +8,14 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 
+/*
+    1. Get all workers from firebase
+    2. Add it to the DropDown component
+    3. When clicking 1+ workers, add the ID of worker to the list
+    4. When showing, retrieve data from workers ID
+    5. When removing, removing from the list
+*/
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -41,15 +49,14 @@ function getStyles(name, personName, theme) {
     };
 }
 
-export default function MultipleSelection() {
+export default function MultipleSelection({ names = names, selectedParticipants = [], setSelectedParticipants, label }) {
     const theme = useTheme();
-    const [personName, setPersonName] = React.useState([]);
 
     const handleChange = (event) => {
         const {
             target: { value },
         } = event;
-        setPersonName(
+        setSelectedParticipants(
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
@@ -58,14 +65,14 @@ export default function MultipleSelection() {
     return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+                <InputLabel id="demo-multiple-chip-label">{label}</InputLabel>
                 <Select
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
-                    value={personName}
+                    value={selectedParticipants}
                     onChange={handleChange}
-                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                    input={<OutlinedInput id="select-multiple-chip" label={label} />}
                     renderValue={(selected) => (
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                             {selected.map((value) => (
@@ -75,13 +82,13 @@ export default function MultipleSelection() {
                     )}
                     MenuProps={MenuProps}
                 >
-                    {names.map((name) => (
+                    {names.map((item) => (
                         <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, personName, theme)}
+                            key={item.id}
+                            value={item.name + ":::" + item.email}
+                            style={getStyles(item, selectedParticipants, theme)}
                         >
-                            {name}
+                            {item.name + ":::" + item.email}
                         </MenuItem>
                     ))}
                 </Select>
