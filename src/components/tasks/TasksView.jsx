@@ -4,10 +4,11 @@ import ModalWindow from './Modal';
 import { NewTask } from './NewTask';
 import TaskView from './TaskView';
 import { UserContext } from '../../App';
+import { validateManagerAccess } from '../../lib/utils';
 
 const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
     const userData = useContext(UserContext);
-    const hasManagerAccess = userData.role === 'manager' || userData.role === 'admin';
+    const hasManagerAccess = validateManagerAccess(userData?.role);
 
     const onClickTitle = (idx) => {
         setIsModalOpen(true);
@@ -15,8 +16,9 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
     }
 
     const renderTasks = data.map((item, idx) => {
-        console.log('i', item);
         switch (userData?.role) {
+            case undefined:
+                break;
             case 'unverified':
                 return;
             default:

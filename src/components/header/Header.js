@@ -6,6 +6,7 @@ import { disconnect } from '../../lib/firebase/auth'
 import { UserContext } from '../../App'
 import DropList from '../tasks/DropList';
 import { updateUserWorkStatus } from '../../lib/firebase/actions'
+import { validateManagerAccess } from '../../lib/utils'
 
 const statusList = [{
     value: 'UNAVAILABLE',
@@ -21,6 +22,7 @@ const statusList = [{
 export const Header = ({ user }) => {
     const userData = useContext(UserContext);
     const [selectValue, setSelectValue] = useState(userData?.work_status || "");
+    const hasManagerAccess = validateManagerAccess(userData?.role);
 
     const onStatusChange = (e) => {
         setSelectValue(e.target.value);
@@ -45,7 +47,7 @@ export const Header = ({ user }) => {
             {!!user && <div>
                 <button className='disconnectButton' onClick={() => {
                     disconnect()
-                }}>Disconect {userData.name}</button>
+                }}>Disconect {userData?.name}</button>
 
                 <select onChange={onStatusChange} value={selectValue} disabled={selectValue === 'OFFLINE'}>
                     {statusList.map((item) => <option value={item.value}>{selectValue === 'OFFLINE' ? "OFFLINE" : item.label}</option>

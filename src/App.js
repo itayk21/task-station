@@ -33,7 +33,7 @@ function App() {
 
   // If there is no user data, or user role value
   // redirect them to login page.
-  if (!user || !userData.role) {
+  if (!user || !userData?.role) {
     return (<div className="App">
       <Connection user={user} />
     </div>)

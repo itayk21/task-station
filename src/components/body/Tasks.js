@@ -7,8 +7,6 @@ import { addNewTask, findAllTasks } from '../../lib/firebase/actions';
 import styles from './Task.module.css'
 import TasksView from '../tasks/TasksView';
 
-
-
 const Tasks = ({ user }) => {
   const data = findAllTasks();
   const dataAsArray = Object.values(data || {});

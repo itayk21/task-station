@@ -23,6 +23,7 @@ import { UserContext } from '../../App';
 
 
 import { useContext } from 'react';
+import { validateAdminAccess } from '../../lib/utils';
 
 
 
@@ -49,6 +50,7 @@ export const Main = ({ user }) => {
     const handleChange = (event, newValue,) => {
         setValue(newValue);
     };
+    const hasAdminAccess = validateAdminAccess(userData?.role);
 
 
     return (
@@ -66,7 +68,7 @@ export const Main = ({ user }) => {
                                     <Tab label="WORKERS" icon={<EngineeringIcon className='worker' />} value={1} />
                                     <Tab label="TASKS" icon={<TaskAltIcon className='task' />} value={2} />
                                     <Tab label="MAIL" icon={<EmailIcon className='mail-logo' />} value={3} />
-                                    <Tab label="ADD USER" icon={<GroupAddIcon className='addUser' />} value={4} />
+                                    {hasAdminAccess && <Tab label="ADD USER" icon={<GroupAddIcon className='addUser' />} value={4} />}
                                 </TabList>
                             </Box>
                             <TabPanel value={1}>
