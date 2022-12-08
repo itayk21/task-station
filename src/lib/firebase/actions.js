@@ -3,7 +3,7 @@ import { set, ref, get, onValue, update } from "firebase/database"
 import { v4 as uuidv4 } from 'uuid';
 
 export const removeVerification = (id) => {
-    ref(database, 'verifications/' + id).remove();
+    set(ref(database, 'verifications/' + id), null);
 }
 
 export const updateUserWorkStatus = (obj, work_status) => {

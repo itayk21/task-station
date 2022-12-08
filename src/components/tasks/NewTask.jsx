@@ -92,7 +92,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
 
     const onSubmit = () => {//send to database
         addNewTask({
-            titleName, description, specialization, date, time, participants: selectedParticipants, notes
+            titleName, description, specialization, date, time, participants: selectedParticipants, notes, status: "TO_DO"
         })
         resetStates()
     }

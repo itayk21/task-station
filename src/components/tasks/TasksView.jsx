@@ -5,17 +5,46 @@ import { NewTask } from './NewTask';
 import TaskView from './TaskView';
 import { UserContext } from '../../App';
 import { validateManagerAccess } from '../../lib/utils';
+import DropList from './DropList';
+
+const statusOptions = [
+    {
+        value: 'ALL',
+        label: 'All',
+    },
+    {
+        value: 'TO_DO',
+        label: 'To do',
+    },
+    {
+        value: 'WIP',
+        label: 'Work In Progress',
+    },
+    {
+        value: 'STUCK',
+        label: 'Stuck',
+    },
+    {
+        value: 'DONE',
+        label: 'done',
+    }, {
+        value: 'CANCELED',
+        label: 'canceled',
+    }
+
+];
 
 const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
     const userData = useContext(UserContext);
     const hasManagerAccess = validateManagerAccess(userData?.role);
+    const [filteredData, setFilteredData] = useState(data || []);
 
     const onClickTitle = (idx) => {
         setIsModalOpen(true);
         setTaskIndex(idx);
     }
 
-    const renderTasks = data.map((item, idx) => {
+    const renderTasks = filteredData.map((item, idx) => {
         switch (userData?.role) {
             case undefined:
                 break;
@@ -46,6 +75,12 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
             </ModalWindow>
 
             {hasManagerAccess && <button onClick={() => setIsModalOpen(true)}>New Task</button>}
+            <DropList list={statusOptions} callback={(statusFilter) => {
+                if (statusFilter === 'ALL') {
+                    return setFilteredData(data);
+                }
+                setFilteredData(data.filter((item) => item.status === statusFilter))
+            }} />
             <div style={{ display: "flex", flexWrap: "wrap" }}>{renderTasks}</div>
         </>
     )
