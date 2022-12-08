@@ -6,7 +6,8 @@ import TaskView from './TaskView';
 import { UserContext } from '../../App';
 
 const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
-    const userRole = useContext(UserContext);
+    const userData = useContext(UserContext);
+    const hasManagerAccess = userData.role === 'manager' || userData.role === 'admin';
 
     const onClickTitle = (idx) => {
         setIsModalOpen(true);
@@ -14,12 +15,16 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
     }
 
     const renderTasks = data.map((item, idx) => {
-        switch (userRole?.role) {
+        console.log('i', item);
+        switch (userData?.role) {
             case 'unverified':
                 return;
             default:
-                return <TaskCard key={idx.toString()} data={item}
-                    onClickTitle={() => onClickTitle(idx.toString())} />
+                const userInList = item.participants.some((participant) => participant.split('-')[1] === userData.email);
+                if (hasManagerAccess || userInList) {
+                    return <TaskCard key={idx.toString()} data={item}
+                        onClickTitle={() => onClickTitle(idx.toString())} />
+                }
         }
     });
 
@@ -38,7 +43,7 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
                 {taskIndex ? <NewTask isEdit={isEdit} setIsEdit={setIsEdit} data={data[parseInt(taskIndex)]} /> : <NewTask isEdit={true} />}
             </ModalWindow>
 
-            <button onClick={() => setIsModalOpen(true)}>New Task</button>
+            {hasManagerAccess && <button onClick={() => setIsModalOpen(true)}>New Task</button>}
             <div style={{ display: "flex", flexWrap: "wrap" }}>{renderTasks}</div>
         </>
     )
