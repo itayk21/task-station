@@ -19,9 +19,10 @@ const statusList = [{
 }];
 
 export const Header = ({ user }) => {
+    //console.log('debug', { user, userData })
 
     const userData = useContext(UserContext);
-    const [selectValue, setSelectValue] = useState(userData.work_status || "");
+    const [selectValue, setSelectValue] = useState(userData?.work_status || "");
 
 
 

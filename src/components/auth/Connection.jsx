@@ -43,7 +43,7 @@ const Connection = ({ user }) => {
             </div>
             {!isRegisterMode && <Login />}
             {isRegisterMode && isValidToken && <Register verificationId={isRegisterMode} />}
-            {!isValidToken && <div>This token is expired. Please contct your manager.</div>}
+            {isRegisterMode && !isValidToken && <div>This token is expired. Please contct your manager.</div>}
         </ >
     )
 }

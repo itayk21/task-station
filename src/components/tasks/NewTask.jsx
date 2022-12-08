@@ -12,10 +12,8 @@ import DialogScreen from '../ui-components/DialogScreen';
 import DropList from './DropList';
 import MultipleSelection from '../ui-components/MultipleSelection';
 import { format } from 'date-fns';
+import { PickTime } from '../ui-components/TimePicker';
 
-// TODO: To find a way to import TimePicker and see the result (we already used it)
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-// END TODO
 
 const statusOptions = [
     {
@@ -164,19 +162,8 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                 </div>
                 <div>
 
-                    {isEdit ? <><TimePicker
-                        ampm={false}
-                        openTo="hours"
-                        views={['hours', 'minutes', 'seconds']}
-                        inputFormat="HH:mm:ss"
-                        mask="__:__:__"
-                        label="With seconds"
-                        value={date}
-                        onChange={(newValue) => {
-                            setDate(newValue);
-                        }}
-                        renderInput={(params) => <TextField {...params} />}
-                    /><TextField
+                    {isEdit ?
+                        <TextField
                             id="outlined-read-only-input"
                             label="Date"
                             value={date}
@@ -184,7 +171,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                             type='date'
                             inputFormat="DD-MM-YYYY"
                             inputProps={{ min: currentTimeWithFormat, max: "2025-01-01", readOnly: false, }}
-                        /></> : <div>End date:{date}</div>}
+                        /> : <div>End date:{date}</div>}
 
                     {/* <DateTimePicker
                         renderInput={(props) => <TextField {...props} />}
@@ -194,7 +181,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                     /> */}
 
 
-                    {isEdit ? <TextField
+                    {isEdit ? <><PickTime value={time} setValue={setTime} /><TextField
                         id="outlined-read-only-input"
                         label="Time"
                         value={time}
@@ -202,7 +189,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         InputProps={{
                             readOnly: false,
                         }}
-                    /> : <div>End time:{time}</div>}
+                    /></> : <div>End time:{time}</div>}
 
                 </div>
 

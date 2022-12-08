@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Modal.module.css'
 
 export default function ModalWindow({ children, isModalOpen = false, setIsModalOpen }) {
+
+    useEffect(() => {
+        if (!!isModalOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [isModalOpen])
+
     return isModalOpen && (
         <>
             <div className={styles.overLay}>

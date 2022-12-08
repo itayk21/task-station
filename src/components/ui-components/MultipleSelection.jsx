@@ -85,10 +85,10 @@ export default function MultipleSelection({ names = names, selectedParticipants 
                     {names.map((item) => (
                         <MenuItem
                             key={item.id}
-                            value={item.name + ":::" + item.email}
+                            value={item.name + "-" + item.email}
                             style={getStyles(item, selectedParticipants, theme)}
                         >
-                            {item.name + ":::" + item.email}
+                            {item.name + "-" + item.email}
                         </MenuItem>
                     ))}
                 </Select>
