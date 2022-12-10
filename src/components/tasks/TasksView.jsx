@@ -38,6 +38,7 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
     const userData = useContext(UserContext);
     const hasManagerAccess = validateManagerAccess(userData?.role);
     const [filteredData, setFilteredData] = useState(data || []);
+    console.info(filteredData)
 
     const onClickTitle = (idx) => {
         setIsModalOpen(true);
@@ -52,9 +53,11 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
                 return;
             default:
                 const userInList = item.participants.some((participant) => participant.split('-')[1] === userData.email);
+                const taskIdx = data.map(e => e.id).indexOf(item.id);
+
                 if (hasManagerAccess || userInList) {
-                    return <TaskCard key={idx.toString()} data={item}
-                        onClickTitle={() => onClickTitle(idx.toString())} />
+                    return <TaskCard key={taskIdx} data={item}
+                        onClickTitle={() => onClickTitle(taskIdx)} />
                 }
         }
     });
