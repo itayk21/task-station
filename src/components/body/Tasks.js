@@ -3,13 +3,31 @@ import React, { useEffect, useState } from 'react'
 
 import Tcomponent from '../tasks/Tcomponent';
 import AddIcon from '@mui/icons-material/Add';
-import { addNewTask, findAllTasks } from '../../lib/firebase/actions';
+import { findAllTasks, findAllUsers } from '../../lib/firebase/actions';
 import styles from './Task.module.css'
 import TasksView from '../tasks/TasksView';
 
 const Tasks = ({ user }) => {
   const data = findAllTasks();
   const dataAsArray = Object.values(data || {});
+
+  const [workers, setWorkers] = useState([]);
+  const activeUsers = workers.filter((user) => user.role !== 'disabled');
+
+  useEffect(() => {
+    findAllUsers(setWorkers);
+    const findInterval = setInterval(() => {
+      findAllUsers(setWorkers)
+    }, 3000);
+
+    // When we are using return on useEffect with
+    // clear interval, it will delete the interval
+    // when we moving between pages in the componens
+    // in othe words, it will stop the interval on destroy.
+    return () => {
+      clearInterval(findInterval);
+    }
+  }, []);
 
   setTimeout(() => {
     setIsLoaded(true);
@@ -22,7 +40,7 @@ const Tasks = ({ user }) => {
     return <p>Loading...</p>
   }
 
-  return <TasksView data={dataAsArray} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />;
+  return <TasksView data={dataAsArray} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} workers={workers} />;
 
 }
 

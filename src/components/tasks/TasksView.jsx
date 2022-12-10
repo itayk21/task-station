@@ -34,11 +34,12 @@ const statusOptions = [
 
 ];
 
-const TasksView = ({ isModalOpen, setIsModalOpen, data }) => {
+const TasksView = ({ isModalOpen, setIsModalOpen, data, workers }) => {
     const userData = useContext(UserContext);
     const hasManagerAccess = validateManagerAccess(userData?.role);
     const [filteredData, setFilteredData] = useState(data || []);
-    console.info(filteredData)
+    const activeUsers = workers.filter((user) => user.role !== 'canceled' && user.role !== 'unverified');
+    console.log('activeUsers', activeUsers)
 
     const onClickTitle = (idx) => {
         setIsModalOpen(true);
