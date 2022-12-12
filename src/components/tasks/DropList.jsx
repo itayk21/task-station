@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 
 
-const DropList = ({ list, defaultValue, callback }) => {
+const DropList = ({ list, defaultValue, callback, label = "dropdown" }) => {
 
     const [state, setState] = React.useState(defaultValue);
 
@@ -20,9 +20,13 @@ const DropList = ({ list, defaultValue, callback }) => {
             <TextField
                 id="outlined-select-currency"
                 select
-                label="Status"
-                value={state}
+                label={label}
+                value={state || null}
                 onChange={handleChange}
+                sx={{
+                    width: 200,
+                }}
+                defaultValue={'All'}
 
             >
                 {list.map((option) => (

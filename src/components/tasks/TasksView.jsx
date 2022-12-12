@@ -6,6 +6,7 @@ import TaskView from './TaskView';
 import { UserContext } from '../../App';
 import { validateManagerAccess } from '../../lib/utils';
 import DropList from './DropList';
+import { useEffect } from 'react';
 
 const statusOptions = [
     {
@@ -39,14 +40,60 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data, workers }) => {
     const hasManagerAccess = validateManagerAccess(userData?.role);
     const [filteredData, setFilteredData] = useState(data || []);
     const activeUsers = workers.filter((user) => user.role !== 'canceled' && user.role !== 'unverified');
-    console.log('activeUsers', activeUsers)
+    const [workerFilter, setWorkerFilter] = useState('');
+    const [workersList, setWorkersList] = useState('');
+
+
+    const [searchParams, setSearchParams] = useState({
+        workerValue: 'ALL',
+        statusValue: 'ALL',
+    })
+
+    useEffect(() => {
+        const result = data.filter((item) => {
+            const isWorkerAllMode = searchParams.workerValue === 'ALL';
+            const isStatusAllMode = searchParams.statusValue === 'ALL';
+
+            if (isStatusAllMode && isWorkerAllMode) {
+                return true;
+            }
+
+            if (!isStatusAllMode && isWorkerAllMode) {
+                return searchParams.statusValue === item.status;
+            }
+
+            if (isStatusAllMode && !isWorkerAllMode) {
+                const user = activeUsers.find(userData => userData.name === searchParams.workerValue);
+                return item.participants.some(participant => participant.split('-')[1] === user.email)
+            }
+
+            if (!isStatusAllMode && !isWorkerAllMode) {
+                const user = activeUsers.find(userData => userData.name === searchParams.workerValue);
+                return item.participants.some(participant => participant.split('-')[1] === user.email) &&
+                    searchParams.statusValue === item.status
+            }
+
+            return false;
+        });
+
+        setFilteredData(result);
+    }, [searchParams])
+
+    const usersDropdownData = activeUsers.map((item) => {
+        return {
+            value: item.name,
+            label: item.name
+        }
+    })
 
     const onClickTitle = (idx) => {
         setIsModalOpen(true);
         setTaskIndex(idx);
     }
 
-    const renderTasks = filteredData.map((item, idx) => {
+    const listData = !!workerFilter ? workersList : filteredData;
+
+    const renderTasks = listData.map((item, idx) => {
         switch (userData?.role) {
             case undefined:
                 break;
@@ -79,15 +126,22 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data, workers }) => {
             </ModalWindow>
 
             {hasManagerAccess && <button onClick={() => setIsModalOpen(true)}>New Task</button>}
-            <DropList list={statusOptions} callback={(statusFilter) => {
-                if (statusFilter === 'ALL') {
-                    return setFilteredData(data);
-                }
-                setFilteredData(data.filter((item) => item.status === statusFilter))
+            <DropList label="Status" list={statusOptions} callback={(statusFilter) => {
+                setSearchParams(prevState => ({
+                    ...prevState,
+                    statusValue: statusFilter
+                }))
+            }} />
+            <DropList label="Worker" list={[{ label: "All", value: 'ALL' }, ...usersDropdownData]} callback={(workerName) => {
+                setSearchParams(prevState => ({
+                    ...prevState,
+                    workerValue: workerName
+                }))
+
             }} />
             <div style={{ display: "flex", flexWrap: "wrap" }}>{renderTasks}</div>
         </>
     )
 }
 
-export default TasksView
+export default TasksView;

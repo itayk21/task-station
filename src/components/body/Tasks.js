@@ -12,7 +12,6 @@ const Tasks = ({ user }) => {
   const dataAsArray = Object.values(data || {});
 
   const [workers, setWorkers] = useState([]);
-  const activeUsers = workers.filter((user) => user.role !== 'disabled');
 
   useEffect(() => {
     findAllUsers(setWorkers);
