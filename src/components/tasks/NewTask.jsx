@@ -3,8 +3,6 @@ import { findAllUsers } from '../../lib/firebase/actions';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import SaveIcon from '@mui/icons-material/Save';
 import { addNewTask, updateTask } from '../../lib/firebase/actions';
@@ -13,6 +11,7 @@ import DropList from './DropList';
 import MultipleSelection from '../ui-components/MultipleSelection';
 import { format } from 'date-fns';
 import { PickTime } from '../ui-components/TimePicker';
+
 
 
 const statusOptions = [
@@ -35,23 +34,29 @@ const availableActions = {
     CANCEL_TASK: 'CANCEL_TASK'
 }
 
+function getTime() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1; // Months start at 0!
+    let dd = today.getDate();
+
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+
+    return yyyy + '-' + mm + '-' + dd;
+}
 export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
-
-
     const currentTime = new Date();
     const currentTimeWithFormat = format(currentTime, 'yyyy-MM-dd');
 
     const [open, setOpen] = React.useState(false);
-
     const [action, setAction] = useState(availableActions.END_TASK)
-
     const [titleName, setTitleName] = useState(data.titleName || "")
     const [description, setDescription] = useState(data.description || "")
     const [specialization, setSpecialization] = useState(data.specialization || "")
-    const [date, setDate] = useState(data.date || "")
+    const [date, setDate] = useState(data.date || getTime())
     const [time, setTime] = useState(data.time || "")
     const [notes, setNotes] = useState(data.notes || "")
-
     const [participants, setParticipants] = useState(data.participants || []);
     const [selectedParticipants, setSelectedParticipants] = useState([]);
 
@@ -181,15 +186,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                     /> */}
 
 
-                    {isEdit ? <><PickTime value={time} setValue={setTime} /><TextField
-                        id="outlined-read-only-input"
-                        label="Time"
-                        value={time}
-                        onChange={(event) => setTime(event.target.value)}
-                        InputProps={{
-                            readOnly: false,
-                        }}
-                    /></> : <div>End time:{time}</div>}
+                    {isEdit ? <PickTime value={time} setValue={setTime} /> : <div>End time:{time}</div>}
 
                 </div>
 
@@ -217,10 +214,10 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
 
 
                 <div>
-                    {!data.titleName && <Button variant="contained" endIcon={<SaveIcon />} onClick={e => onSubmit()}>
+                    {!data.titleName && <Button variant="contained" endIcon={<SaveIcon />} onClick={() => onSubmit()}>
                         Add
                     </Button>}
-                    {!isDone && !isCanceled && data.titleName && <Button variant="contained" endIcon={<SaveIcon />} onClick={e => {
+                    {!isDone && !isCanceled && data.titleName && <Button variant="contained" endIcon={<SaveIcon />} onClick={() => {
                         setIsEdit(prevState => !prevState);
                         if (isEdit) {
                             resetStates();
@@ -229,7 +226,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         {isEdit ? 'Cancel' : 'Edit'}
                     </Button>}
 
-                    {isEdit && data.titleName && <Button variant="contained" endIcon={<SaveIcon />} onClick={e => {
+                    {isEdit && data.titleName && <Button variant="contained" endIcon={<SaveIcon />} onClick={() => {
                         updateTask(data.id, generateTaskData());
                         setIsEdit(false);
                     }}>
