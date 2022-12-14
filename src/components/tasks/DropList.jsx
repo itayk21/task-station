@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 const DropList = ({ list, defaultValue, callback, label = "dropdown" }) => {
 
-    const [state, setState] = React.useState(defaultValue);
+    const [state, setState] = React.useState(defaultValue || list[0].value);
 
     const handleChange = (event) => {
         callback(event.target.value);
@@ -29,8 +29,8 @@ const DropList = ({ list, defaultValue, callback, label = "dropdown" }) => {
                 defaultValue={'All'}
 
             >
-                {list.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
+                {list.map((option, idx) => (
+                    <MenuItem key={idx} value={option.value}>
                         {option.label}
                     </MenuItem>
                 ))}

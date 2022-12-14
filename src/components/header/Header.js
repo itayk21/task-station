@@ -50,7 +50,7 @@ export const Header = ({ user }) => {
                 }}>Disconect {userData?.name}</button>
 
                 <select onChange={onStatusChange} value={selectValue} disabled={selectValue === 'OFFLINE'}>
-                    {statusList.map((item) => <option value={item.value}>{selectValue === 'OFFLINE' ? "OFFLINE" : item.label}</option>
+                    {statusList.map((item, idx) => <option key={idx} value={item.value}>{selectValue === 'OFFLINE' ? "OFFLINE" : item.label}</option>
                     )}
                 </select>
 

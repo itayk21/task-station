@@ -24,31 +24,16 @@ import { UserContext } from '../../App';
 
 import { useContext } from 'react';
 import { validateAdminAccess } from '../../lib/utils';
-
-
+import { useState } from "react";
 
 
 export const Main = ({ user }) => {
 
     const userData = useContext(UserContext);
+    const [tabIndex, setTabIndex] = useState('0')
 
-    // <BrowserRouter>
-    // <Route>
-
-    //     <Route path='/Tasks' element={<Tasks/>}/>
-    //     <Route path='/Contact' element={<Contact/>}/>
-
-    // </Route>
-
-
-    // </BrowserRouter>
-
-
-
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue,) => {
-        setValue(newValue);
+    const handleChange = (event, newValue) => {
+        setTabIndex(newValue)
     };
     const hasAdminAccess = validateAdminAccess(userData?.role);
 
@@ -62,25 +47,25 @@ export const Main = ({ user }) => {
             <div className='tabsContainer'>
                 {userData.role !== "unverified" && userData.role !== "canceled" ?
                     <Box sx={{ width: '100%', typography: 'body1' }}>
-                        <TabContext value={value}>
+                        <TabContext value={tabIndex}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <TabList onChange={handleChange} aria-label="lab API tabs example">
-                                    <Tab label="WORKERS" icon={<EngineeringIcon className='worker' />} value={1} />
-                                    <Tab label="TASKS" icon={<TaskAltIcon className='task' />} value={2} />
-                                    <Tab label="MAIL" icon={<EmailIcon className='mail-logo' />} value={3} />
-                                    {hasAdminAccess && <Tab label="ADD USER" icon={<GroupAddIcon className='addUser' />} value={4} />}
+                                    <Tab label="WORKERS" icon={<EngineeringIcon className='worker' />} value={'1'} />
+                                    <Tab label="TASKS" icon={<TaskAltIcon className='task' />} value={'0'} />
+                                    <Tab label="MAIL" icon={<EmailIcon className='mail-logo' />} value={'3'} />
+                                    {hasAdminAccess && <Tab label="ADD USER" icon={<GroupAddIcon className='addUser' />} value={'4'} />}
                                 </TabList>
                             </Box>
-                            <TabPanel value={1}>
+                            <TabPanel value={'1'}>
                                 <Active_workers />
                             </TabPanel>
-                            <TabPanel value={2}>
+                            <TabPanel value={'0'}>
                                 <Tasks user={user} />
                             </TabPanel>
-                            <TabPanel value={3}>
+                            <TabPanel value={'3'}>
                                 <Contact />
                             </TabPanel>
-                            <TabPanel value={4}>
+                            <TabPanel value={'4'}>
                                 <AddUser />
                             </TabPanel>
                         </TabContext>
