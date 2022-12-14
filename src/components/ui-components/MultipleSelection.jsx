@@ -69,6 +69,8 @@ export default function MultipleSelection({ names = names, selectedParticipants 
                 <Select
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
+                    error={!selectedParticipants.length}
+                    helperText={!selectedParticipants.length && 'You must enter atleast one worker'}
                     multiple
                     value={selectedParticipants}
                     onChange={handleChange}

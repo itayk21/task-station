@@ -9,7 +9,7 @@ import { addNewTask, updateTask } from '../../lib/firebase/actions';
 import DialogScreen from '../ui-components/DialogScreen';
 import DropList from './DropList';
 import MultipleSelection from '../ui-components/MultipleSelection';
-import { format } from 'date-fns';
+import { format, formatDistanceToNow  } from 'date-fns';
 import { PickTime } from '../ui-components/TimePicker';
 
 
@@ -115,8 +115,8 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
 
     const participantsContainer = !!participants.length && (<>
         <ol>
-            {participants?.map((participant) => {
-                return <li>{JSON.stringify(participant)}</li>
+            {participants?.map((participant, idx) => {
+                return <li key={idx}>{JSON.stringify(participant)}</li>
             })}
         </ol>
     </>)
@@ -131,11 +131,14 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
             <div className="task_action_container">
                 <div className='task_title_container'>
                     {isEdit ? <TextField
+                        autoFocus
                         id="outlined-read-only-input"
-                        label="Task Description"
+                        label="Task Name"
                         value={titleName}
                         onChange={(e) => setTitleName(e.target.value)}
                         style={{ width: "500px" }}
+                        error={!titleName.length}
+                        helperText={!titleName.length && 'You must enter task name'}
                         InputProps={{
                             readOnly: false,
                         }}
@@ -147,6 +150,8 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         label="Task Description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        error={!description.length}
+                        helperText={!description.length && 'You must enter task description'}
                         style={{ width: "500px" }}
                         InputProps={{
                             readOnly: false,
@@ -159,6 +164,8 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         id="outlined-read-only-input"
                         label="Task specialization"
                         value={specialization}
+                        error={!specialization.length}
+                        helperText={!specialization.length && 'You must enter task specialization'}
                         onChange={(e) => setSpecialization(e.target.value)}
                         InputProps={{
                             readOnly: false,
