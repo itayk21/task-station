@@ -11,6 +11,8 @@ import DropList from './DropList';
 import MultipleSelection from '../ui-components/MultipleSelection';
 import { format, formatDistanceToNow  } from 'date-fns';
 import { PickTime } from '../ui-components/TimePicker';
+import TextInput from "../ui-components/TextInput";
+import SelectInput from "../ui-components/SelectInput";
 
 
 
@@ -59,6 +61,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
     const [notes, setNotes] = useState(data.notes || "")
     const [participants, setParticipants] = useState(data.participants || []);
     const [selectedParticipants, setSelectedParticipants] = useState([]);
+    const [isDateError, setIsDateError] = useState(false);
 
     const filteredParticipants = participants.length && participants?.filter((participant) => {
         return participant.role === 'user'
@@ -130,36 +133,26 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
 
             <div className="task_action_container">
                 <div className='task_title_container'>
-                    {isEdit ? <TextField
-                        autoFocus
-                        id="outlined-read-only-input"
-                        label="Task Name"
-                        value={titleName}
-                        onChange={(e) => setTitleName(e.target.value)}
-                        style={{ width: "500px" }}
-                        error={!titleName.length}
-                        helperText={!titleName.length && 'You must enter task name'}
-                        InputProps={{
-                            readOnly: false,
-                        }}
-                    /> : <div><h1>{titleName}</h1></div>}
+
+                    {isEdit ?
+                        <TextInput label="Task Name" value={titleName} onChange={(e) => setTitleName(e.target.value)} /> :
+                            <div><h1>{titleName}</h1></div>
+                        }
                 </div>
+
+
+
+
                 <div>
-                    {isEdit ? <TextField
-                        id="outlined-read-only-input"
-                        label="Task Description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        error={!description.length}
-                        helperText={!description.length && 'You must enter task description'}
-                        style={{ width: "500px" }}
-                        InputProps={{
-                            readOnly: false,
-                        }}
-                    /> : <><div>Description:</div><div>{description}</div></>}
+                    {isEdit ?
+                        <TextInput label="Task Description" value={description} onChange={(e) => setDescription(e.target.value)} /> :
+                        <><div>Description:</div><div>{description}</div></>
+                    }
+
                 </div>
                 <div>
 
+                  <SelectInput list={[{label: "works"}, { label: "cool"}]} defaultText={"Choose"} />
                     {isEdit ? <TextField
                         id="outlined-read-only-input"
                         label="Task specialization"
@@ -178,20 +171,18 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                         <TextField
                             id="outlined-read-only-input"
                             label="Date"
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
+                            value={'18-12-2022'}
+                            onChange={(e) => {
+                                setDate(e.target.value)
+                                const inputDate = e.target.value.split('-').join('');
+                                const currentDate = currentTimeWithFormat.split('-').join('')
+                                // setIsDateError((currentDate - inputDate) > 0);
+                            }}
+                            error={isDateError}
+                            helperText={isDateError && 'Please insert valid date'}
                             type='date'
-                            inputFormat="DD-MM-YYYY"
                             inputProps={{ min: currentTimeWithFormat, max: "2025-01-01", readOnly: false, }}
                         /> : <div>End date:{date}</div>}
-
-                    {/* <DateTimePicker
-                        renderInput={(props) => <TextField {...props} />}
-                        label="DateTimePicker"
-                        value={time}
-                        onChange={(event) => setTime(event.target.value)}
-                    /> */}
-
 
                     {isEdit ? <PickTime value={time} setValue={setTime} /> : <div>End time:{time}</div>}
 
