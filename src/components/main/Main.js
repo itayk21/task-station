@@ -25,6 +25,8 @@ import { UserContext } from '../../App';
 import { useContext } from 'react';
 import { validateAdminAccess } from '../../lib/utils';
 import { useState } from "react";
+import Specializations from "../management/Specializations";
+import Management from "../management/Management";
 
 
 export const Main = ({ user }) => {
@@ -54,6 +56,7 @@ export const Main = ({ user }) => {
                                     <Tab label="TASKS" icon={<TaskAltIcon className='task' />} value={'0'} />
                                     <Tab label="MAIL" icon={<EmailIcon className='mail-logo' />} value={'3'} />
                                     {hasAdminAccess && <Tab label="ADD USER" icon={<GroupAddIcon className='addUser' />} value={'4'} />}
+                                    {hasAdminAccess && <Tab label="MANAGEMENT" icon={<GroupAddIcon className='addUser' />} value={'5'} />}
                                 </TabList>
                             </Box>
                             <TabPanel value={'1'}>
@@ -67,6 +70,9 @@ export const Main = ({ user }) => {
                             </TabPanel>
                             <TabPanel value={'4'}>
                                 <AddUser />
+                            </TabPanel>
+                            <TabPanel value={'5'}>
+                                <Management />
                             </TabPanel>
                         </TabContext>
                     </Box> : <div>{userData.role === "canceled" ? "This account is disabled." : "You need to be verified"}  </div>}

@@ -145,44 +145,25 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
 
                 <div>
                     {isEdit ?
-                        <TextInput label="Task Description" value={description} onChange={(e) => setDescription(e.target.value)} /> :
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            multiline
+                            rows={2}
+                            style={{ width: "500px", borderRadius: "14px" }}
+                            disabled={isDone || isCanceled}
+                        /> :
                         <><div>Description:</div><div>{description}</div></>
                     }
 
                 </div>
                 <div>
-
-                  <SelectInput list={[{label: "works"}, { label: "cool"}]} defaultText={"Choose"} />
-                    {isEdit ? <TextField
-                        id="outlined-read-only-input"
-                        label="Task specialization"
-                        value={specialization}
-                        error={!specialization.length}
-                        helperText={!specialization.length && 'You must enter task specialization'}
-                        onChange={(e) => setSpecialization(e.target.value)}
-                        InputProps={{
-                            readOnly: false,
-                        }}
-                    /> : <><div>Specialization:</div><div>{specialization}</div></>}
-                </div>
-                <div>
-
                     {isEdit ?
-                        <TextField
-                            id="outlined-read-only-input"
-                            label="Date"
-                            value={'18-12-2022'}
-                            onChange={(e) => {
-                                setDate(e.target.value)
-                                const inputDate = e.target.value.split('-').join('');
-                                const currentDate = currentTimeWithFormat.split('-').join('')
-                                // setIsDateError((currentDate - inputDate) > 0);
-                            }}
-                            error={isDateError}
-                            helperText={isDateError && 'Please insert valid date'}
-                            type='date'
-                            inputProps={{ min: currentTimeWithFormat, max: "2025-01-01", readOnly: false, }}
-                        /> : <div>End date:{date}</div>}
+                        <input className={"date_input"} type="date" name="begin"
+                               placeholder="dd-mm-yyyy" value={date} onChange={(e) => setDate(e.target.value)}
+                               min={currentTimeWithFormat} max="2030-12-31" /> : <div>End date:{date}</div>}
 
                     {isEdit ? <PickTime value={time} setValue={setTime} /> : <div>End time:{time}</div>}
 
@@ -206,7 +187,6 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                     rows={4}
                     style={{ width: "500px" }}
                     disabled={isDone || isCanceled}
-
                 />
 
 

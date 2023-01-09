@@ -192,6 +192,9 @@ rgb(13, 74, 241) - blue stuck
 
 .task_title_container {
     margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .option_online {
@@ -204,4 +207,14 @@ rgb(13, 74, 241) - blue stuck
 
 .option_break {
     background-color: #f8da5b;
+}
+
+.date_input {
+    padding: 10px;
+    background: rgba(0,0,0,0.1);
+    border: none;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 300;
+    outline: none;
 }

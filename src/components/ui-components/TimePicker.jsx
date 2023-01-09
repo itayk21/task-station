@@ -9,7 +9,7 @@ import './TimePicker.css';
 
 export const PickTime = ({ setValue }) => {
     return <TimePicker
-        style={{ width: 100 }}
+        style={{ width: 150 }}
         showSecond={false}
         defaultValue={moment()}
         className="xxx"

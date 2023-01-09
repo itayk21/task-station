@@ -1,8 +1,9 @@
 .inputGroup {
     font-family: 'Segoe UI', sans-serif;
     margin: 1em 0 1em 0;
-    max-width: 190px;
+    max-width: 500px;
     position: relative;
+    width: 100%;
 }
 
 .inputGroup input {
