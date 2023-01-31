@@ -14,6 +14,7 @@ import { PickTime } from "../ui-components/TimePicker";
 import TextInput from "../ui-components/TextInput";
 import SelectInput from "../ui-components/SelectInput";
 import TextArea from "../ui-components/TextArea/TextArea";
+import translations from "../../lib/utils/translations";
 
 const statusOptions = [
   {
@@ -58,11 +59,11 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
     data.specialization || ""
   );
   const [date, setDate] = useState(data.date || getTime());
-  const [time, setTime] = useState(data.time || "");
+  const [time, setTime] = useState(data.time || "10:00");
   const [notes, setNotes] = useState(data.notes || "");
   const [participants, setParticipants] = useState(data.participants || []);
   const [selectedParticipants, setSelectedParticipants] = useState([]);
-  const [isDateError, setIsDateError] = useState(false);
+  const [hasSubmitError, setHasSubmitError] = useState(false);
 
   const filteredParticipants =
     (participants.length &&
@@ -95,14 +96,63 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
     setTitleName(data.titleName || "");
     setDescription(data.description || "");
     setSpecialization(data.specialization || "");
-    setDate(data.date || "");
-    setTime(data.time || "");
-    setParticipants(data.participants || "");
+    setDate(data.date || getTime());
+    setTime(data.time || "10:00");
+    setSelectedParticipants(data.participants || []);
     setNotes(data.notes || "");
   };
 
+  const converStringDateToDate = (date) => {
+    const [year, month, day] = date.split("-");
+
+    return new Date(year, month - 1, day);
+  };
+
+  const getCurrentHour = () => {
+    const date = new Date();
+    return {
+      hour: date.getHours(),
+      minute: date.getMinutes(),
+    };
+  };
+
   const onSubmit = () => {
-    //send to database
+    setHasSubmitError(null);
+
+    const dateStringAsDateObj = converStringDateToDate(date);
+    const formTimeAsHour = time.split(":")[0];
+    const formTimeAsMinutes = time.split(":")[1];
+    const currentTime = getCurrentHour();
+    const dateOlderThanNow =
+      dateStringAsDateObj.getTime() < new Date().getTime();
+    const isToday =
+      dateStringAsDateObj.toDateString() == new Date().toDateString();
+
+    if (titleName.length < 2) {
+      return setHasSubmitError(translations.errors.NOT_ENOUGH_CHAR_TITLE_ERR);
+    }
+
+    if (description.length < 2) {
+      return setHasSubmitError(translations.errors.NOT_ENOUGH_CHAR_DESC_ERR);
+    }
+
+    if (dateOlderThanNow && !isToday) {
+      return setHasSubmitError(translations.errors.INVALID_DATE_ERR);
+    }
+
+    if (
+      (isToday && formTimeAsHour < currentTime.hour) ||
+      (isToday &&
+        formTimeAsMinutes < currentTime.minute &&
+        formTimeAsHour < currentTime.hour)
+    ) {
+      return setHasSubmitError(translations.errors.INVALID_TIME_ERR);
+    }
+
+    if (!selectedParticipants.length) {
+      return setHasSubmitError(translations.errors.PARTICIPANTS_LENGTH_ERR);
+    }
+
     addNewTask({
       titleName,
       description,
@@ -316,6 +366,8 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                 Cancel task
               </Button>
             )}
+
+          <div>{hasSubmitError}</div>
 
           {/* 
                     <Button variant="contained" endIcon={<DeleteIcon />}>
