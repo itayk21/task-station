@@ -175,7 +175,10 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data, workers }) => {
           }));
         }}
       />
-      <div style={{ display: "flex", flexWrap: "wrap" }}>{renderTasks}</div>
+      {!filteredData.length && <div>No data found.</div>}
+      {!!filteredData.length && (
+        <div style={{ display: "flex", flexWrap: "wrap" }}>{renderTasks}</div>
+      )}
     </>
   );
 };

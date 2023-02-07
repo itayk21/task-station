@@ -5,5 +5,6 @@ export default Object.freeze({
     INVALID_DATE_ERR: "Date cannot be older than today.",
     INVALID_TIME_ERR: "Time cannot be older than now.",
     PARTICIPANTS_LENGTH_ERR: "Participants must be at least 1.",
+    TASK_ADD: "Task added successfully.",
   },
 });

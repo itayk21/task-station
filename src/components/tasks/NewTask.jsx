@@ -15,6 +15,8 @@ import TextInput from "../ui-components/TextInput";
 import SelectInput from "../ui-components/SelectInput";
 import TextArea from "../ui-components/TextArea/TextArea";
 import translations from "../../lib/utils/translations";
+import "./newTask.css";
+import ShowTask from "./ShowTask/ShowTask";
 
 const statusOptions = [
   {
@@ -187,6 +189,20 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
     </>
   );
 
+  if (!isEdit) {
+    return (
+      <ShowTask
+        item={{
+          title: titleName,
+          description,
+          status: data.status,
+          end_date: date,
+          participants,
+        }}
+      />
+    );
+  }
+
   return (
     <div>
       <DialogScreen
@@ -301,14 +317,11 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
 
         <div>
           {!data.titleName && (
-            <Button
-              variant="contained"
-              endIcon={<SaveIcon />}
-              onClick={() => onSubmit()}
-            >
-              Add
-            </Button>
+            <button className="button-22" onClick={() => onSubmit()}>
+              ADD TASK
+            </button>
           )}
+
           {!isDone && !isCanceled && data.titleName && (
             <Button
               variant="contained"
