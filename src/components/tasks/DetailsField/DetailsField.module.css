@@ -1,0 +1,12 @@
+.container{
+    display: flex;
+    align-items: start;
+    gap: 10px;
+}
+
+.label{
+    font-weight: 700;
+    margin: 0;
+    color: lightslategray;
+    font-size: 16.8px;
+}

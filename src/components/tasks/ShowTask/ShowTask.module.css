@@ -1,4 +1,4 @@
-.container header {
+.header_details {
     display: flex;
 }
 
@@ -52,4 +52,22 @@
 .progress_bar_value {
     height: 100%;
     background: darkgreen;
+}
+
+.workers_and_time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.content_header{
+    padding: 10px 0;
+    display: flex;
+    font-size: 22px;
+}
+
+.container hr {
+    color: rgba(0,0,0,0.3);
+    margin: 14px 0px;
 }
