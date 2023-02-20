@@ -71,3 +71,17 @@
     color: rgba(0,0,0,0.3);
     margin: 14px 0px;
 }
+
+.container main {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer_buttons{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+

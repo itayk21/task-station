@@ -8,6 +8,7 @@ import { updateTask } from "../../../lib/firebase/actions";
 import React, { useState } from "react";
 import SelectInput from "../../ui-components/SelectInput";
 import TextArea from "../../ui-components/TextArea/TextArea";
+import BaseButton from "../../ui-components/BaseButton/BaseButton";
 
 const statusOptions = [
   {
@@ -22,14 +23,24 @@ const statusOptions = [
     value: "STUCK",
     label: "Stuck",
   },
+  {
+    value: "DONE",
+    label: "Done",
+  },
+  {
+    value: "CANCELED",
+    label: "Canceled",
+  },
 ];
 
 const convertStatusToPercentage = (status) => {
   switch (status) {
-    case "TO_DO" || "STUCK":
+    case "TO_DO" || "STUCK" || "CANCELED":
       return 0;
     case "WIP":
       return 50;
+    case "DONE":
+      return 100;
     default:
       return 0;
   }
@@ -42,7 +53,7 @@ function daysRemaining(date) {
 }
 
 const ShowTask = (props) => {
-  const { item } = props;
+  const { item, setIsEdit } = props;
   const [status, setStatus] = useState(item.status);
   const [notes, setNotes] = useState(item.notes);
 
@@ -54,6 +65,9 @@ const ShowTask = (props) => {
     updateTask(item.id, Object.assign(item, { status: e.target.value }));
     setStatus(e.target.value);
   };
+
+  const updateCurrentTask = () =>
+    updateTask(item.id, Object.assign(item, { status, notes }));
 
   return (
     <section className={styles.container}>
@@ -117,7 +131,12 @@ const ShowTask = (props) => {
           />
         </DetailsField>
       </main>
-      <footer></footer>
+      <footer>
+        <div className={styles.footer_buttons}>
+          <BaseButton label={"Update Task"} onClick={updateCurrentTask} />
+          <BaseButton label={"Edit Task"} onClick={() => setIsEdit(true)} />
+        </div>
+      </footer>
     </section>
   );
 };

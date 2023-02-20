@@ -17,6 +17,7 @@ import TextArea from "../ui-components/TextArea/TextArea";
 import translations from "../../lib/utils/translations";
 import "./newTask.css";
 import ShowTask from "./ShowTask/ShowTask";
+import BaseButton from "../ui-components/BaseButton/BaseButton";
 
 const statusOptions = [
   {
@@ -203,6 +204,7 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
           time,
           notes,
         }}
+        setIsEdit={setIsEdit}
       />
     );
   }
@@ -321,9 +323,11 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
 
         <div>
           {!data.titleName && (
-            <button className="button-22" onClick={() => onSubmit()}>
-              ADD TASK
-            </button>
+            <BaseButton label={"ADD TASK"} onClick={onSubmit} />
+
+            // <button className="button-22" l onClick={() => onSubmit()}>
+            //   ADD TASK
+            // </button>
           )}
 
           {!isDone && !isCanceled && data.titleName && (
