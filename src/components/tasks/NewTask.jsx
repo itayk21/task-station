@@ -321,13 +321,13 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
           value={notes}
         />
 
-        <div>
+        <div
+          style={{ display: "flex", justifyContent: "center", width: "100%" }}
+        >
           {!data.titleName && (
-            <BaseButton label={"ADD TASK"} onClick={onSubmit} />
-
-            // <button className="button-22" l onClick={() => onSubmit()}>
-            //   ADD TASK
-            // </button>
+            <>
+              <BaseButton label={"Add Task"} onClick={onSubmit} />
+            </>
           )}
 
           {!isDone && !isCanceled && data.titleName && (

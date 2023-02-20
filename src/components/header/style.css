@@ -186,14 +186,14 @@ rgb(13, 74, 241) - blue stuck
     display: flex;
     flex-direction: column;
     gap: 13px;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .task_title_container {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .option_online {
