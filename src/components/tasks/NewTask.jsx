@@ -194,13 +194,14 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
       <ShowTask
         item={{
           id: data.id,
-          title: titleName,
+          titleName,
           description,
           status: data.status,
           end_date: date,
           participants,
           date,
           time,
+          notes,
         }}
       />
     );

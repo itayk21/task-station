@@ -7,6 +7,7 @@ import DropList from "../DropList";
 import { updateTask } from "../../../lib/firebase/actions";
 import React, { useState } from "react";
 import SelectInput from "../../ui-components/SelectInput";
+import TextArea from "../../ui-components/TextArea/TextArea";
 
 const statusOptions = [
   {
@@ -25,12 +26,12 @@ const statusOptions = [
 
 const convertStatusToPercentage = (status) => {
   switch (status) {
-    case "TO_DO":
+    case "TO_DO" || "STUCK":
       return 0;
     case "WIP":
       return 50;
     default:
-      return 100;
+      return 0;
   }
 };
 
@@ -43,12 +44,14 @@ function daysRemaining(date) {
 const ShowTask = (props) => {
   const { item } = props;
   const [status, setStatus] = useState(item.status);
+  const [notes, setNotes] = useState(item.notes);
 
   const statusAsPercentage = convertStatusToPercentage(item.status);
-  const daysLeft = daysRemaining(item.end_date);
+  const daysLeft = daysRemaining(item.date);
+  const participantsObjectList = item.participants;
 
   const onChangeStatus = async (e) => {
-    updateTask(item.id, Object.assign({}, { status: e.target.value }));
+    updateTask(item.id, Object.assign(item, { status: e.target.value }));
     setStatus(e.target.value);
   };
 
@@ -58,7 +61,7 @@ const ShowTask = (props) => {
         <div className={styles.header_details}>
           <div className={styles.header_left}></div>
           <div className={styles.header_right}>
-            <h1>{item.title}</h1>
+            <h1>{item.titleName}</h1>
             <p>{item.description}</p>
           </div>
         </div>
@@ -84,7 +87,7 @@ const ShowTask = (props) => {
           ></div>
         </div>
         <div className={styles.workers_and_time}>
-          <Participants list={item.participants} />
+          <Participants list={[{ name: "itzik gabay" }]} />
           <div>
             End date: {item.date} {item.time}
           </div>
@@ -94,20 +97,23 @@ const ShowTask = (props) => {
         <hr />
         <h1 className={styles.content_header}>Task Details:</h1>
         <DetailsField label={"Status:"}>
-          <DropList
-            list={statusOptions}
-            defaultValue={statusOptions[0].value}
-            callback={(statusChanged) => {
-              updateTask("00", Object.assign({}, { status: statusChanged }));
-            }}
-          />
-
           <SelectInput
             list={statusOptions}
             defaultText={status}
             onChange={onChangeStatus}
             disabled={false}
             value={status}
+          />
+        </DetailsField>
+
+        <DetailsField label={"Notes:"}>
+          <TextArea
+            label="Notes:"
+            showLabel={notes}
+            isDisabled={false}
+            onChange={(e) => setNotes(e.target.value)}
+            name="notes"
+            value={notes}
           />
         </DetailsField>
       </main>

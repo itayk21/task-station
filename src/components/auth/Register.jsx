@@ -13,6 +13,7 @@ const Register = ({ verificationId }) => {
   const [name, setName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [specialization, setSpecialization] = useState("");
   const [hasSubmitError, setHasSubmitError] = useState(null);
 
   const onSubmit = async () => {
@@ -26,6 +27,7 @@ const Register = ({ verificationId }) => {
         name,
         dateOfBirth,
         phoneNumber,
+        specialization,
       },
       res.user.uid
     );
@@ -71,6 +73,14 @@ const Register = ({ verificationId }) => {
         </div>
 
         <div className={styles.inputContainer}>
+          <label>Specialization: </label>
+          <input
+            type="text"
+            placeholder="plase enter your specialization"
+            value={specialization}
+            onChange={(e) => setSpecialization(e.target.value)}
+          />
+
           <label>Phone Number: </label>
           <input
             type="tel"
