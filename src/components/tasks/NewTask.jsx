@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { findAllUsers } from "../../lib/firebase/actions";
+import { findAllTasks, findAllUsers } from "../../lib/firebase/actions";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -18,6 +18,7 @@ import translations from "../../lib/utils/translations";
 import "./newTask.css";
 import ShowTask from "./ShowTask/ShowTask";
 import BaseButton from "../ui-components/BaseButton/BaseButton";
+import MultiSelectionNew from "../ui-components/MultipleSelectionNew/MultipleSelectionNew";
 
 const statusOptions = [
   {
@@ -50,7 +51,13 @@ function getTime() {
 
   return yyyy + "-" + mm + "-" + dd;
 }
-export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
+export const NewTask = ({
+  data = {},
+  isEdit,
+  setIsEdit,
+  setTasks,
+  setIsModalOpen,
+}) => {
   const currentTime = new Date();
   const currentTimeWithFormat = format(currentTime, "yyyy-MM-dd");
 
@@ -166,7 +173,12 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
       notes,
       status: "TO_DO",
     });
+
     resetStates();
+
+    findAllTasks(setTasks);
+
+    setIsModalOpen(false);
   };
 
   const CONSTANTS = {
@@ -289,6 +301,8 @@ export const NewTask = ({ data = {}, isEdit, setIsEdit }) => {
                 setSelectedParticipants={setSelectedParticipants}
                 selectedParticipants={selectedParticipants}
               />
+
+              {/*<MultiSelectionNew />*/}
             </>
           ) : (
             <>

@@ -35,7 +35,13 @@ const statusOptions = [
   },
 ];
 
-const TasksView = ({ isModalOpen, setIsModalOpen, data, workers }) => {
+const TasksView = ({
+  isModalOpen,
+  setIsModalOpen,
+  data,
+  workers,
+  setTasks,
+}) => {
   const userData = useContext(UserContext);
   const hasManagerAccess = validateManagerAccess(userData?.role);
   const [filteredData, setFilteredData] = useState(data || []);
@@ -49,6 +55,10 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data, workers }) => {
     workerValue: "ALL",
     statusValue: "ALL",
   });
+
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
 
   useEffect(() => {
     const result = data.filter((item) => {
@@ -146,9 +156,15 @@ const TasksView = ({ isModalOpen, setIsModalOpen, data, workers }) => {
             isEdit={isEdit}
             setIsEdit={setIsEdit}
             data={data[parseInt(taskIndex)]}
+            setTasks={setTasks}
+            setIsModalOpen={setIsModalOpen}
           />
         ) : (
-          <NewTask isEdit={true} />
+          <NewTask
+            isEdit={true}
+            setTasks={setTasks}
+            setIsModalOpen={setIsModalOpen}
+          />
         )}
       </ModalWindow>
 
