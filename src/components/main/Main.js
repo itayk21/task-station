@@ -24,6 +24,7 @@ import { validateAdminAccess } from "../../lib/utils";
 import { useState } from "react";
 import Specializations from "../management/Specializations";
 import Management from "../management/Management";
+import Profile from "../profile/Profile";
 
 export const Main = ({ user }) => {
   const userData = useContext(UserContext);
@@ -72,6 +73,13 @@ export const Main = ({ user }) => {
                       value={"4"}
                     />
                   )}
+
+                  <Tab
+                    label="PROFILE"
+                    icon={<GroupAddIcon className="addUser" />}
+                    value={"6"}
+                  />
+
                   {hasAdminAccess && (
                     <Tab
                       label="MANAGEMENT"
@@ -92,6 +100,9 @@ export const Main = ({ user }) => {
               </TabPanel>
               <TabPanel value={"4"}>
                 <AddUser />
+              </TabPanel>
+              <TabPanel value={"6"}>
+                <Profile />
               </TabPanel>
               <TabPanel value={"5"}>
                 <Management />
