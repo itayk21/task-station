@@ -33,3 +33,9 @@ touch-action: manipulation;
 .button-22:hover {
     background-color: #1C84FF;
 }
+
+.edit_button{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
