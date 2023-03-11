@@ -2,11 +2,10 @@ import React, { useContext, useState } from "react";
 import TaskCard from "./TaskCard";
 import ModalWindow from "./Modal";
 import { NewTask } from "./NewTask";
-import TaskView from "./TaskView";
-import { UserContext } from "../../App";
 import { validateManagerAccess } from "../../lib/utils";
 import DropList from "./DropList";
 import { useEffect } from "react";
+import { UserContext } from "../layout/Base";
 
 const statusOptions = [
   {

@@ -1,7 +1,7 @@
 import styles from "./Participants.module.css";
 import { useCallback, useEffect, useState } from "react";
 
-const convertNameToShortName = (name) => {
+export const convertNameToShortName = (name) => {
   let result = "";
   const splittedName = name.split(" ");
   splittedName.map((shortName) => (result += shortName[0]));

@@ -71,3 +71,9 @@ tbody tr:nth-child(odd) {
 tbody tr:nth-child(even) {
   background-color: #eee;
 }
+
+.main-content {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}

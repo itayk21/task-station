@@ -1,12 +1,8 @@
 //import { getAuth } from 'firebase/auth'
-import React, { useState, useEffect, useContext } from 'react'
-import { findAllUsers } from '../../lib/firebase/actions'
-
-import { Route, Router } from "react-router-dom"
-import { UserContext } from '../../App'
-import styles from './ActiveWorkers.module.css'
-import { format } from 'date-fns'
-//import { getFirebaseAuth } from '../../lib/firebase/auth'
+import React, { useState, useEffect, useContext } from "react";
+import { findAllUsers } from "../../lib/firebase/actions";
+import styles from "./ActiveWorkers.module.css";
+import { format } from "date-fns";
 
 /*
 Roles: ['user', 'manager', 'admin']
@@ -21,7 +17,7 @@ user: update tasks only, mail
 */
 
 const Active_workers = () => {
-  const headers = ['Time', 'Name', 'Status']
+  const headers = ["Time", "Name", "Status"];
   const [users, setUsers] = useState([]);
 
   const returnByValues = (item, values) => {
@@ -31,15 +27,15 @@ const Active_workers = () => {
     // from the item, and injecting it to the newItem object
     values.forEach((value) => {
       newItem[value] = item[value];
-    })
+    });
 
     return newItem;
-  }
+  };
 
   useEffect(() => {
     findAllUsers(setUsers);
     const findInterval = setInterval(() => {
-      findAllUsers(setUsers)
+      findAllUsers(setUsers);
     }, 3000);
 
     // When we are using return on useEffect with
@@ -48,47 +44,61 @@ const Active_workers = () => {
     // in othe words, it will stop the interval on destroy.
     return () => {
       clearInterval(findInterval);
-    }
+    };
   }, []);
 
   return (
-
     <div className={styles.tablePlace}>
       <div className={styles.table}>
         <table>
           <thead>
             <tr>
-              {headers.map((item) => <th>{item}</th>)}
+              {headers.map((item) => (
+                <th>{item}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
             {users.map((user) => {
-
-              if (user.status === 'canceled' || !user.work_status || user.work_status === 'OFFLINE') {
+              if (
+                user.status === "canceled" ||
+                !user.work_status ||
+                user.work_status === "OFFLINE"
+              ) {
                 return;
               }
 
-              user = returnByValues(user, ['last_work_status', 'name', 'work_status']);
-              const date = new Date(user.last_work_status)
-              user.last_work_status = format(date, "hh:mm")
+              user = returnByValues(user, [
+                "last_work_status",
+                "name",
+                "work_status",
+              ]);
+              const date = new Date(user.last_work_status);
+              user.last_work_status = format(date, "hh:mm");
 
-              return <tr>
-                {Object.values(user).map((item, idx) => {
+              return (
+                <tr>
+                  {Object.values(user).map((item, idx) => {
+                    if (idx === 2) {
+                      return (
+                        <td
+                          className={`option_${user.work_status.toLowerCase()}`}
+                        >
+                          {item}
+                        </td>
+                      );
+                    }
 
-                  if (idx === 2) {
-                    return <td className={`option_${user.work_status.toLowerCase()}`}>{item}</td>
-                  }
-
-                  return <td>{item}</td>
-                })}
-              </tr>
+                    return <td>{item}</td>;
+                  })}
+                </tr>
+              );
             })}
           </tbody>
         </table>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Active_workers
+export default Active_workers;
