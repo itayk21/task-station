@@ -28,6 +28,7 @@ const Register = ({ verificationId }) => {
         dateOfBirth,
         phoneNumber,
         specialization,
+        manager: null,
       },
       res.user.uid
     );
