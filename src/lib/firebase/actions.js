@@ -18,6 +18,10 @@ export const updateUserRole = (obj, role) => {
   set(ref(database, "users/" + obj.id), { ...obj, role });
 };
 
+export const updateUserByObj = (user, userUpdated) => {
+  set(ref(database, "users/" + user.id), { ...user, ...userUpdated });
+};
+
 export const findAllUsers = (setUsers) => {
   const refVal = ref(database, "users/");
   let response;
@@ -55,6 +59,28 @@ export const findAllUsersUnverified = (setUnverified) => {
           return user.role === "unverified";
         });
         setUnverified(values);
+      }
+      return response;
+    },
+    { onlyOnce: true }
+  );
+};
+
+export const findUsersWithSpecifiedRoles = (roles, setState) => {
+  const refVal = ref(database, "users/");
+
+  onValue(
+    refVal,
+    (snapshot) => {
+      let response = snapshot.val();
+      let values = Object.values(response); // turn to array
+      if (values.length) {
+        values = values.filter((user) => {
+          if (roles.includes(user.role)) {
+            return user;
+          }
+        });
+        setState(values);
       }
       return response;
     },

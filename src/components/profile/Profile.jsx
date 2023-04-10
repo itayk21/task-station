@@ -11,6 +11,7 @@ import { convertNameToShortName } from "../tasks/Participants/Participant";
 import { SystemAuthRoles } from "../../lib/utils/config";
 import { useUserAuth } from "../../hooks/useUserAuth";
 import RolesList from "./profile-components/roles-list/RolesList";
+import ManagerList from "./profile-components/manager-list/ManagerList";
 
 const getColorByStatus = (type) => {
   if (type === "ONLINE") {
@@ -80,7 +81,7 @@ const Profile = () => {
 
         <DetailsField label="Manager">
           {isAdmininstrator ? (
-            <div>CAN CHANGE THIS </div>
+            <ManagerList user={userProfileData} />
           ) : (
             <TextInput
               disabled={!isEditMode}

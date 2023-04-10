@@ -10,4 +10,11 @@
     margin: 0;
     color: lightslategray;
     font-size: 16.8px;
+    width: 50%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.children {
+    width: 47%;
 }
