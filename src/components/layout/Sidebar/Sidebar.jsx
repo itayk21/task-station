@@ -41,8 +41,13 @@ export const Sidebar = ({ user }) => {
               expandAriaLabel: "Expand Home section",
             },
             {
-              name: "Workers",
+              name: "Workers Status",
               url: "/workers",
+              expandAriaLabel: "Expand Home section",
+            },
+            {
+              name: "Organization",
+              url: "/organizationWorkers",
               expandAriaLabel: "Expand Home section",
             },
           ],

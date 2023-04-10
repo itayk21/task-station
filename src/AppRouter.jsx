@@ -13,6 +13,7 @@ import { auth } from "./lib/firebase";
 import { findUserById } from "./lib/firebase/actions";
 import Tasks from "./components/body/Tasks";
 import Connection from "./components/auth/Connection";
+import OrganizationList from "./components/management/organization-list/OrganizationList";
 
 export const AppRouter = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -46,6 +47,7 @@ export const AppRouter = () => {
           <Route path="/management" element={<Management />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/register" element={<Connection />} />
+          <Route path="/organizationWorkers" element={<OrganizationList />} />
         </Routes>
       </BaseLayout>
     </UserContext.Provider>
