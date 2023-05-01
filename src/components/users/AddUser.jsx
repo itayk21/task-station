@@ -27,7 +27,7 @@ const AddUser = () => {
       verificationDate: generateFutureDate().getTime(),
     });
 
-    setLink(`${window.location.href}?token=${id}`);
+    setLink(`${window.location.origin}/register?token=${id}`);
   };
 
   const onClickApprove = (obj) => {

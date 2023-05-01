@@ -1,7 +1,11 @@
 import GenericTable from "../../ui-components/GenericTable/GenericTable";
 import { useEffect, useState } from "react";
 import React from "react";
-import { findAllUsers } from "../../../lib/firebase/actions";
+import {
+  findAllUsers,
+  findUserById,
+  findUserByIdAndGiveName,
+} from "../../../lib/firebase/actions";
 import SelectInput from "../../ui-components/SelectInput";
 import { SystemAuthRoles } from "../../../lib/utils/config";
 
@@ -19,10 +23,13 @@ const OrganizationList = () => {
     setFilteredUsers(users);
   }, [users]);
 
+  // const findManagerName = () => {
+  //   return console.log("manager test", user.name);
+  // };
+
   const columns = [
     { label: "Name", key: "name" },
     { label: "Mail", key: "email" },
-    // { label: "Manager name", key: "manager" },
     { label: "Phone number", key: "phone" },
     { label: "Date of birth", key: "dateOfBirth" },
     { label: "Job specialization", key: "specialization" },
@@ -55,7 +62,11 @@ const OrganizationList = () => {
           />
         </div>
       </div>
-      <GenericTable columns={columns} items={filteredUsers} />
+      <GenericTable
+        columns={columns}
+        items={filteredUsers}
+        clickRowFeature={{ key: "name", baseUrl: "profile", idKey: "id" }}
+      />
     </div>
   );
 };

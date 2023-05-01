@@ -31,8 +31,12 @@ export const AppRouter = () => {
   }, [user]);
 
   if (!user || !userData?.role) {
-    // TODO: Redirect in case user not logged-in // <Connection user={user} />
-    return;
+    return (
+      <Routes>
+        <Route path="/" element={<Connection user={user} />} />
+        <Route path="/register" element={<Connection />} />
+      </Routes>
+    );
   }
 
   return (
@@ -46,7 +50,6 @@ export const AppRouter = () => {
           <Route path="/addUser" element={<AddUser />} />
           <Route path="/management" element={<Management />} />
           <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/register" element={<Connection />} />
           <Route path="/organizationWorkers" element={<OrganizationList />} />
         </Routes>
       </BaseLayout>

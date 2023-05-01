@@ -1,11 +1,9 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { addNewUser, removeVerification } from "../../lib/firebase/actions";
-import {
-  logInWithEmailAndPassword,
-  registerWithEmailAndPassword,
-} from "../../lib/firebase/auth";
+import { registerWithEmailAndPassword } from "../../lib/firebase/auth";
 import styles from "./Auth.module.css";
+import { convertDateStringToDate, userSchema } from "./User.schema";
 
 const Register = ({ verificationId }) => {
   const [email, setEmail] = useState("");
@@ -17,17 +15,32 @@ const Register = ({ verificationId }) => {
   const [hasSubmitError, setHasSubmitError] = useState(null);
 
   const onSubmit = async () => {
-    // to add if statements for all the states
+    setHasSubmitError(null);
+
+    const userInput = {
+      name,
+      dateOfBirth,
+      phoneNumber,
+      specialization,
+      password,
+      email,
+    };
+
+    const validation = userSchema.validate({
+      ...userInput,
+      dateOfBirth: convertDateStringToDate(dateOfBirth),
+    });
+
+    if (validation.error.message) {
+      return setHasSubmitError(validation.error.message);
+    }
 
     const res = await registerWithEmailAndPassword(email, password);
     addNewUser(
       {
+        ...userInput,
         email: res.user.email,
         role: "unverified",
-        name,
-        dateOfBirth,
-        phoneNumber,
-        specialization,
         manager: null,
       },
       res.user.uid
