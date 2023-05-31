@@ -7,13 +7,13 @@ import Active_workers from "./components/body/Active_workers";
 import React, { useEffect, useState } from "react";
 import Contact from "./components/body/Contact";
 import AddUser from "./components/users/AddUser";
-import Management from "./components/management/Management";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./lib/firebase";
 import { findUserById } from "./lib/firebase/actions";
 import Tasks from "./components/body/Tasks";
 import Connection from "./components/auth/Connection";
 import OrganizationList from "./components/management/organization-list/OrganizationList";
+import Specializations from "./components/management/specializations/specializations";
 
 export const AppRouter = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -48,9 +48,9 @@ export const AppRouter = () => {
           <Route path="/workers" element={<Active_workers />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/addUser" element={<AddUser />} />
-          <Route path="/management" element={<Management />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/organizationWorkers" element={<OrganizationList />} />
+          <Route path="/specializations" element={<Specializations />} />
         </Routes>
       </BaseLayout>
     </UserContext.Provider>

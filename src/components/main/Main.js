@@ -21,8 +21,6 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { useContext } from "react";
 import { validateAdminAccess } from "../../lib/utils";
 import { useState } from "react";
-import Specializations from "../management/Specializations";
-import Management from "../management/Management";
 import Profile from "../profile/Profile";
 import { UserContext } from "../layout/Base";
 
@@ -90,9 +88,6 @@ export const Main = () => {
             </TabPanel>
             <TabPanel value={"4"}>
               <AddUser />
-            </TabPanel>
-            <TabPanel value={"5"}>
-              <Management />
             </TabPanel>
           </TabContext>
         </Box>
