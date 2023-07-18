@@ -5,6 +5,7 @@ import { NewTask } from "./NewTask";
 import { validateManagerAccess } from "../../lib/utils";
 import DropList from "./DropList";
 import { useEffect } from "react";
+import styles from "./TasksView.module.css";
 import { UserContext } from "../layout/Base";
 
 const statusOptions = [
@@ -166,34 +167,37 @@ const TasksView = ({
           />
         )}
       </ModalWindow>
-
-      {hasManagerAccess && (
-        <button onClick={() => setIsModalOpen(true)}>New Task</button>
-      )}
-      <DropList
-        label="Status"
-        list={statusOptions}
-        callback={(statusFilter) => {
-          setSearchParams((prevState) => ({
-            ...prevState,
-            statusValue: statusFilter,
-          }));
-        }}
-      />
-      <DropList
-        label="Worker"
-        list={[{ label: "All", value: "ALL" }, ...usersDropdownData]}
-        callback={(workerName) => {
-          setSearchParams((prevState) => ({
-            ...prevState,
-            workerValue: workerName,
-          }));
-        }}
-      />
-      {!filteredData.length && <div>No data found.</div>}
-      {!!filteredData.length && (
-        <div style={{ display: "flex", flexWrap: "wrap" }}>{renderTasks}</div>
-      )}
+      <div className={styles.container}>
+        <div className={styles.customControls}>
+          {hasManagerAccess && (
+            <button onClick={() => setIsModalOpen(true)}>New Task</button>
+          )}
+          <DropList
+            label="Status"
+            list={statusOptions}
+            callback={(statusFilter) => {
+              setSearchParams((prevState) => ({
+                ...prevState,
+                statusValue: statusFilter,
+              }));
+            }}
+          />
+          <DropList
+            label="Worker"
+            list={[{ label: "All", value: "ALL" }, ...usersDropdownData]}
+            callback={(workerName) => {
+              setSearchParams((prevState) => ({
+                ...prevState,
+                workerValue: workerName,
+              }));
+            }}
+          />
+        </div>
+        {!filteredData.length && <div>No data found.</div>}
+        {!!filteredData.length && (
+          <div style={{ display: "flex", flexWrap: "wrap" }}>{renderTasks}</div>
+        )}
+      </div>
     </>
   );
 };

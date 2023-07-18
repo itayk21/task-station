@@ -39,3 +39,7 @@ touch-action: manipulation;
     justify-content: center;
     gap: 10px;
 }
+
+.taskTitle{
+    margin-bottom: 22px;
+}

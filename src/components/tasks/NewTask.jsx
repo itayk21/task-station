@@ -237,6 +237,8 @@ export const NewTask = ({
         message={isEndTaskMode ? CONSTANTS.END_TASK_MSG : CONSTANTS.DISABLE_MSG}
       />
 
+      <h1 className={"taskTitle"}>Create Your Task</h1>
+
       <div className="task_action_container">
         <div className="task_title_container">
           {isEdit ? (
