@@ -14,6 +14,7 @@ import Tasks from "./components/body/Tasks";
 import Connection from "./components/auth/Connection";
 import OrganizationList from "./components/management/organization-list/OrganizationList";
 import Specializations from "./components/management/specializations/specializations";
+import MailboxPage from "./components/mailbox/Mailbox";
 
 export const AppRouter = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -51,6 +52,7 @@ export const AppRouter = () => {
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/organizationWorkers" element={<OrganizationList />} />
           <Route path="/specializations" element={<Specializations />} />
+          <Route path="/mailbox" element={<MailboxPage />} />
         </Routes>
       </BaseLayout>
     </UserContext.Provider>
