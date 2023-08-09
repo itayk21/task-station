@@ -52,7 +52,14 @@ export const AppRouter = () => {
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/organizationWorkers" element={<OrganizationList />} />
           <Route path="/specializations" element={<Specializations />} />
-          <Route path="/mailbox" element={<MailboxPage />} />
+          <Route
+            path="/mailbox/:receiverId"
+            element={<MailboxPage pageSource="conversation" />}
+          />
+          <Route
+            path="/mailbox"
+            element={<MailboxPage pageSource="mainPage" />}
+          />
         </Routes>
       </BaseLayout>
     </UserContext.Provider>
