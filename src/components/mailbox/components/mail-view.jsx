@@ -15,28 +15,24 @@ export const MailView = ({ receiver, sender }) => {
   }, [receiver, sender]);
 
   const onClickReply = (message) => {
+    console.log({ receiver, sender });
+
     addConversationItem(sender, receiver, conversationHistory, {
       date: new Date().getTime(),
       message,
     });
   };
 
-  if (conversationHistory?.length === 0) {
-    return <div>Loding</div>;
-  }
-
   console.log("conversationHistory", conversationHistory, sender?.name);
 
   return (
     <div className={styles.right}>
-      {!conversationHistory?.length ? (
+      {!conversationHistory?.length && (
         <MailResponse
           title={sender?.name}
           date={new Date().toString()}
           message={null}
         />
-      ) : (
-        <MailResponse />
       )}
       <MailReply onClickReply={onClickReply} />
     </div>

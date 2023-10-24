@@ -12,6 +12,7 @@ import { SystemAuthRoles } from "../../lib/utils/config";
 import { useUserAuth } from "../../hooks/useUserAuth";
 import RolesList from "./profile-components/roles-list/RolesList";
 import ManagerList from "./profile-components/manager-list/ManagerList";
+import BaseButton from "../ui-components/BaseButton/BaseButton";
 
 const getColorByStatus = (type) => {
   if (type === "ONLINE") {
@@ -106,7 +107,9 @@ const Profile = () => {
         </DetailsField>
       </main>
 
-      <footer></footer>
+      <footer>
+        <BaseButton label={"Send message"} onClick={() => null} />
+      </footer>
     </div>
   );
 };

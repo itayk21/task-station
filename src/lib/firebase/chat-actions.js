@@ -2,31 +2,22 @@ import { onValue, ref, set } from "firebase/database";
 import { database } from "./index";
 
 export const createConversation = (sender, receiver) => {
-  set(ref(database, `chats/${sender.id}/${receiver.id}`, { messages: [] }));
+  set(ref(database, `chats/${sender.id}/${receiver.id}`), { messages: [] });
 };
 
 export const addConversationItem = (sender, receiver, history, item) => {
   if (!history) {
-    createConversation();
+    createConversation(sender, receiver);
   }
 
+  //history.messages.push(item)
+  // history.messages.push(item)
+
   // update sender history
-  set(
-    ref(
-      database,
-      `chats/${sender.id}/${receiver.id}`,
-      history.messages.push(item)
-    )
-  );
+  set(ref(database, `chats/${sender.id}/${receiver.id}`), { name: "test" });
 
   // update receiver history
-  set(
-    ref(
-      database,
-      `chats/${receiver.id}/${sender.id}`,
-      history.messages.push(item)
-    )
-  );
+  set(ref(database, `chats/${receiver.id}/${sender.id}`), { name: "b" });
 };
 
 export const findUserConversationById = (selfId, incomingId, setHistory) => {

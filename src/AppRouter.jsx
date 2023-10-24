@@ -53,7 +53,7 @@ export const AppRouter = () => {
           <Route path="/organizationWorkers" element={<OrganizationList />} />
           <Route path="/specializations" element={<Specializations />} />
           <Route
-            path="/mailbox/:receiverId"
+            path="/mailbox/:targetId"
             element={<MailboxPage pageSource="conversation" />}
           />
           <Route

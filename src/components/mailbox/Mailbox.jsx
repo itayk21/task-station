@@ -9,11 +9,11 @@ import { useParams } from "react-router-dom";
 const MailboxPage = ({ pageSource }) => {
   const selfUser = useContext(UserContext);
   const [receiverInfo, setReceiverInfo] = useState({});
-  const { receiverId } = useParams();
+  const { targetId } = useParams();
 
   useEffect(() => {
-    findUserById(receiverId, setReceiverInfo);
-  }, [receiverId]);
+    findUserById(targetId, setReceiverInfo);
+  }, [targetId]);
 
   if (
     receiverInfo === null &&
