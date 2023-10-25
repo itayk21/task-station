@@ -31,11 +31,14 @@ const Register = ({ verificationId }) => {
       dateOfBirth: convertDateStringToDate(dateOfBirth),
     });
 
-    if (validation.error.message) {
+    if (validation?.error?.message) {
       return setHasSubmitError(validation.error.message);
     }
 
     const res = await registerWithEmailAndPassword(email, password);
+
+    delete userInput.password;
+
     addNewUser(
       {
         ...userInput,

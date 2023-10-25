@@ -14,26 +14,54 @@ export const MailView = ({ receiver, sender }) => {
     findUserConversationById(sender.id, receiver.id, setConversationHistory);
   }, [receiver, sender]);
 
+  console.log("conversationHistory", conversationHistory);
+
   const onClickReply = (message) => {
     console.log({ receiver, sender });
 
-    addConversationItem(sender, receiver, conversationHistory, {
-      date: new Date().getTime(),
-      message,
-    });
+    const newHistory = addConversationItem(
+      sender,
+      receiver,
+      conversationHistory?.messages || [],
+      {
+        date: new Date().getTime(),
+        message,
+        sender: {
+          name: sender?.name,
+          id: sender?.id,
+        },
+      }
+    );
+
+    setConversationHistory({ messages: newHistory });
   };
 
   console.log("conversationHistory", conversationHistory, sender?.name);
 
-  return (
-    <div className={styles.right}>
-      {!conversationHistory?.length && (
+  if (!conversationHistory?.messages?.length) {
+    return (
+      <>
         <MailResponse
           title={sender?.name}
           date={new Date().toString()}
           message={null}
         />
-      )}
+        <MailReply onClickReply={onClickReply} />
+      </>
+    );
+  }
+
+  return (
+    <div className={styles.right}>
+      {conversationHistory.messages.map((conversation) => {
+        return (
+          <MailResponse
+            message={conversation.message}
+            date={conversation.date}
+            title={conversation.sender.name}
+          />
+        );
+      })}
       <MailReply onClickReply={onClickReply} />
     </div>
   );
