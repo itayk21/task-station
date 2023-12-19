@@ -9,7 +9,7 @@ import {
 
 export const MailView = ({ receiver, sender }) => {
   const [conversationHistory, setConversationHistory] = useState([]);
-  const historyArray = Object.values(conversationHistory?.messages || []);
+  const historyArray = Object.values(conversationHistory?.messages || {});
 
   useEffect(() => {
     findUserConversationById(sender.id, receiver.id, setConversationHistory);
