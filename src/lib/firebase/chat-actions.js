@@ -1,19 +1,18 @@
-import { onValue, ref, set } from "firebase/database";
+import { onValue, ref, push } from "firebase/database";
 import { database } from "./index";
-export const addConversationItem = (sender, receiver, history, item) => {
-  const response = [...history, item];
+export const addConversationItem = (sender, receiver, item) => {
+  const senderChatRef = ref(
+    database,
+    `chats/${sender.id}/${receiver.id}/messages`
+  );
+  const receiverChatRef = ref(
+    database,
+    `chats/${receiver.id}/${sender.id}/messages`
+  );
 
-  // update sender history
-  set(ref(database, `chats/${sender.id}/${receiver.id}`), {
-    messages: response,
-  });
-
-  // update receiver history
-  set(ref(database, `chats/${receiver.id}/${sender.id}`), {
-    messages: response,
-  });
-
-  return response;
+  // Push the new message to the 'messages' node in Firebase
+  push(receiverChatRef, item);
+  push(senderChatRef, item);
 };
 
 export const findUserConversationById = (selfId, incomingId, setHistory) => {

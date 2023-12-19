@@ -9,36 +9,26 @@ import {
 
 export const MailView = ({ receiver, sender }) => {
   const [conversationHistory, setConversationHistory] = useState([]);
+  const historyArray = Object.values(conversationHistory?.messages || []);
 
   useEffect(() => {
     findUserConversationById(sender.id, receiver.id, setConversationHistory);
   }, [receiver, sender]);
 
-  console.log("conversationHistory", conversationHistory);
-
   const onClickReply = (message) => {
-    console.log({ receiver, sender });
+    addConversationItem(sender, receiver, {
+      date: new Date().getTime(),
+      message,
+      sender: {
+        name: sender?.name,
+        id: sender?.id,
+      },
+    });
 
-    const newHistory = addConversationItem(
-      sender,
-      receiver,
-      conversationHistory?.messages || [],
-      {
-        date: new Date().getTime(),
-        message,
-        sender: {
-          name: sender?.name,
-          id: sender?.id,
-        },
-      }
-    );
-
-    setConversationHistory({ messages: newHistory });
+    findUserConversationById(sender.id, receiver.id, setConversationHistory);
   };
 
-  console.log("conversationHistory", conversationHistory, sender?.name);
-
-  if (!conversationHistory?.messages?.length) {
+  if (!historyArray.length) {
     return (
       <>
         <MailResponse
@@ -53,7 +43,7 @@ export const MailView = ({ receiver, sender }) => {
 
   return (
     <div className={styles.right}>
-      {conversationHistory.messages.map((conversation) => {
+      {historyArray.map((conversation) => {
         return (
           <MailResponse
             message={conversation.message}
