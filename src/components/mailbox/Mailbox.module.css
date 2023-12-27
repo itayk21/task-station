@@ -40,6 +40,11 @@
     flex-direction: column;
 }
 
+.mail_responses {
+    height: 500px;
+    overflow: auto;
+}
+
 .right_mail_card {
     display: flex;
     flex-direction: column;

@@ -16,14 +16,16 @@ const MailboxPage = ({ pageSource }) => {
   }, [targetId]);
 
   if (
-    receiverInfo === null &&
-    pageSource !== "mainPage"
-    // || receiverInfo?.id === selfUser.id
+    (receiverInfo === null && pageSource !== "mainPage") ||
+    receiverInfo?.id === selfUser.id
   ) {
     window.open("/mailbox", "_self");
   }
 
   console.log("receiverInfo", selfUser, receiverInfo);
+
+  // todo:
+  // if (selfUser || receiverInfo) return <div>Loading</div>;
 
   return (
     <div className={styles.container}>

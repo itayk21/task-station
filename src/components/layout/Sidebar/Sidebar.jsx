@@ -50,6 +50,11 @@ export const Sidebar = ({ user }) => {
               url: "/organizationWorkers",
               expandAriaLabel: "Expand Home section",
             },
+            {
+              name: "Messages",
+              url: "/mailbox",
+              expandAriaLabel: "Expand Home section",
+            },
           ],
           isExpanded: true,
         },

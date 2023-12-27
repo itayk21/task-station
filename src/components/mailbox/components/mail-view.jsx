@@ -43,15 +43,17 @@ export const MailView = ({ receiver, sender }) => {
 
   return (
     <div className={styles.right}>
-      {historyArray.map((conversation) => {
-        return (
-          <MailResponse
-            message={conversation.message}
-            date={conversation.date}
-            title={conversation.sender.name}
-          />
-        );
-      })}
+      <div className={styles.mail_responses}>
+        {historyArray.map((conversation) => {
+          return (
+            <MailResponse
+              message={conversation.message}
+              date={conversation.date}
+              title={conversation.sender.name}
+            />
+          );
+        })}
+      </div>
       <MailReply onClickReply={onClickReply} />
     </div>
   );

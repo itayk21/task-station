@@ -11,15 +11,15 @@ export const addConversationItem = (sender, receiver, item) => {
   const receiverChatMetadataRef = ref(database, `${receiverBaseRef}/metadata`);
 
   set(receiverChatMetadataRef, {
-    name: receiver.name,
-    id: receiver.id,
-    email: receiver.email,
-  });
-
-  set(senderChatMetadataRef, {
     name: sender.name,
     id: sender.id,
     email: sender.email,
+  });
+
+  set(senderChatMetadataRef, {
+    name: receiver.name,
+    id: receiver.id,
+    email: receiver.email,
   });
 
   push(receiverChatRef, item);
