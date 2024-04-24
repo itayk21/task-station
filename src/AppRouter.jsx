@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { BaseLayout, UserContext } from "./components/layout/Base";
 import { Main } from "./components/main/Main";
 import "./App.css";
@@ -15,10 +15,17 @@ import Connection from "./components/auth/Connection";
 import OrganizationList from "./components/management/organization-list/OrganizationList";
 import Specializations from "./components/management/specializations/specializations";
 import MailboxPage from "./components/mailbox/Mailbox";
+import useFirebaseData from "./lib/firebase/useFirebaseData";
+import ForgotPassword from "./components/auth/ForgotPassword";
 
 export const AppRouter = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, userLoading, error] = useAuthState(auth);
+  console.log("userLoading", userLoading);
   const [userData, setUserData] = useState(false);
+  const currentPath = window.location.pathname;
+  const navigate = useNavigate();
+  const userFirebaseData = useFirebaseData(user?.uid && "users/" + user.uid);
+  console.log("userFirebaseData", userFirebaseData);
 
   useEffect(() => {
     // user UID that we are getting from firebase SDK
@@ -31,11 +38,21 @@ export const AppRouter = () => {
     }
   }, [user]);
 
+  console.log("userData", userData);
+  console.log("user", user);
+
   if (!user || !userData?.role) {
+    // if ((!user && userLoading === false) || !userData?.role) {
+    //   if (currentPath !== "/" && currentPath !== "/register") {
+    //     return navigate("/");
+    //   }
+
     return (
       <Routes>
         <Route path="/" element={<Connection user={user} />} />
         <Route path="/register" element={<Connection />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="*" element={<Connection />} />
       </Routes>
     );
   }

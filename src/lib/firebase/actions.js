@@ -1,6 +1,7 @@
 import { database } from "./index";
 import { set, ref, get, onValue, update } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 export const removeVerification = (id) => {
   set(ref(database, "verifications/" + id), null);
@@ -112,6 +113,7 @@ export const findUserById = (id, setUserData) => {
     refVal,
     (snapshot) => {
       let response = snapshot.val();
+      console.log("refresh");
       setUserData(response);
       return response;
     },
@@ -156,4 +158,16 @@ export const addNewTask = async (item) => {
 
 export const updateTask = (id, obj) => {
   set(ref(database, "tasks/" + id), obj);
+};
+
+export const resetPassword = (auth, email) => {
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      console.log("Sent successfully");
+      return true;
+    })
+    .catch((error) => {
+      console.log(error.code, error.message);
+      return false;
+    });
 };
