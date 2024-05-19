@@ -3,7 +3,7 @@ import { Header } from "../header/Header";
 import { useContext, useEffect, useState } from "react";
 import styles from "./Profile.module.css";
 import { UserContext } from "../layout/Base";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { findUserById } from "../../lib/firebase/actions";
 import DetailsField from "../tasks/DetailsField/DetailsField";
 import TextInput from "../ui-components/TextInput";
@@ -29,13 +29,15 @@ const getColorByStatus = (type) => {
 
 const Profile = () => {
   let { id } = useParams();
+  const navigate = useNavigate();
+  const viewingUserData = useContext(UserContext);
+
   const [userProfileData, setUserProfileData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
+
   const specializationValue = userProfileData?.specialization
     ? userProfileData.specialization
     : "No specialization";
-
-  const viewingUserData = useContext(UserContext);
 
   const shortName =
     userProfileData?.name && convertNameToShortName(userProfileData.name);
@@ -46,6 +48,10 @@ const Profile = () => {
   useEffect(() => {
     findUserById(id, setUserProfileData);
   }, []);
+
+  const handleNavigation = () => {
+    navigate(`/mailbox/${id}`);
+  };
 
   if (!userProfileData) {
     return <div>Cannot find user. Please try again later.</div>;
@@ -108,7 +114,7 @@ const Profile = () => {
       </main>
 
       <footer>
-        <BaseButton label={"Send message"} onClick={() => null} />
+        <BaseButton label={"Send message"} onClick={handleNavigation} />
       </footer>
     </div>
   );

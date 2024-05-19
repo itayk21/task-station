@@ -66,8 +66,10 @@ const ShowTask = (props) => {
     setStatus(e.target.value);
   };
 
-  const updateCurrentTask = () =>
+  const updateCurrentTask = () => {
     updateTask(item.id, Object.assign(item, { status, notes }));
+    setStatus(status);
+  };
 
   return (
     <section className={styles.container}>

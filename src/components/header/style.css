@@ -14,11 +14,16 @@ h1 {
 .header {
     background-color: #4156f2;
     height: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .logo {
-    width: 10%;
+    width: 30%;
+    max-width: 30%;
     height: 10%;
+    cursor: pointer;
 
 }
 
@@ -148,6 +153,7 @@ rgb(13, 74, 241) - blue stuck
     .logo {
         width: 36%;
         height: 10%;
+        cursor: pointer;
 
     }
 }

@@ -23,7 +23,6 @@ const MailReply = ({ onClickReply }) => {
         >
           Reply
         </button>
-        <button className={styles.right_footer_reply_button}>Forward</button>
       </div>
     </div>
   );

@@ -2,10 +2,16 @@ import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { logInWithEmailAndPassword } from "../../lib/firebase/auth";
 import styles from "./Auth.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleNavigation = () => {
+    navigate("/forgotpassword");
+  };
 
   return (
     <div className={styles.body}>
@@ -46,7 +52,7 @@ const Login = () => {
         </button>
 
         <div>
-          <button>Forgot my password</button>
+          <button onClick={handleNavigation}>Forgot my password</button>
         </div>
       </div>
     </div>

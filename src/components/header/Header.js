@@ -7,6 +7,7 @@ import DropList from "../tasks/DropList";
 import { updateUserWorkStatus } from "../../lib/firebase/actions";
 import { validateManagerAccess } from "../../lib/utils";
 import { UserContext } from "../layout/Base";
+import { useNavigate } from "react-router-dom";
 
 const statusList = [
   {
@@ -27,6 +28,11 @@ export const Header = ({ user }) => {
   const userData = useContext(UserContext);
   const [selectValue, setSelectValue] = useState(userData?.work_status || "");
   const hasManagerAccess = validateManagerAccess(userData?.role);
+  const navigate = useNavigate();
+
+  const handleNavigation = () => {
+    navigate("/");
+  };
 
   const onStatusChange = (e) => {
     setSelectValue(e.target.value);
@@ -46,7 +52,7 @@ export const Header = ({ user }) => {
 
   return (
     <div className="header">
-      <img className="logo" src={logo} alt="logo" />
+      <img className="logo" src={logo} alt="logo" onClick={handleNavigation} />
 
       {!!user && (
         <div>
