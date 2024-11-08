@@ -406,7 +406,7 @@ export const NewTask = ({
 
           <div>{hasSubmitError}</div>
 
-          {/* 
+          {/*
                     <Button variant="contained" endIcon={<DeleteIcon />}>
                         Delete
                     </Button>

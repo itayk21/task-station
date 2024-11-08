@@ -120,8 +120,11 @@ const TasksView = ({
       case "unverified":
         return;
       default:
+        // Ensure participant is a string before attempting to split
         const userInList = item?.participants?.some(
-          (participant) => participant.split("-")[1] === userData.email
+          (participant) =>
+            typeof participant === "string" &&
+            participant.split("-")[1] === userData.email
         );
         const taskIdx = data.map((e) => e.id).indexOf(item.id);
 
@@ -136,6 +139,31 @@ const TasksView = ({
         }
     }
   });
+
+  //
+  // const renderTasks = listData.map((item, idx) => {
+  //   switch (userData?.role) {
+  //     case undefined:
+  //       break;
+  //     case "unverified":
+  //       return;
+  //     default:
+  //       const userInList = item?.participants?.some(
+  //         (participant) => participant.split("-")[1] === userData.email
+  //       );
+  //       const taskIdx = data.map((e) => e.id).indexOf(item.id);
+  //
+  //       if (hasManagerAccess || userInList) {
+  //         return (
+  //           <TaskCard
+  //             key={taskIdx}
+  //             data={item}
+  //             onClickTitle={() => onClickTitle(taskIdx)}
+  //           />
+  //         );
+  //       }
+  //   }
+  // });
 
   const [taskIndex, setTaskIndex] = useState(null);
   const [isEdit, setIsEdit] = useState(false);

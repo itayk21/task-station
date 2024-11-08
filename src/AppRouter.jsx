@@ -20,12 +20,8 @@ import ForgotPassword from "./components/auth/ForgotPassword";
 
 export const AppRouter = () => {
   const [user, userLoading, error] = useAuthState(auth);
-  console.log("userLoading", userLoading);
   const [userData, setUserData] = useState(false);
-  const currentPath = window.location.pathname;
-  const navigate = useNavigate();
   const userFirebaseData = useFirebaseData(user?.uid && "users/" + user.uid);
-  console.log("userFirebaseData", userFirebaseData);
 
   useEffect(() => {
     // user UID that we are getting from firebase SDK
@@ -37,9 +33,6 @@ export const AppRouter = () => {
       findUserById(userUID, setUserData);
     }
   }, [user]);
-
-  console.log("userData", userData);
-  console.log("user", user);
 
   if (!user || !userData?.role) {
     // if ((!user && userLoading === false) || !userData?.role) {
