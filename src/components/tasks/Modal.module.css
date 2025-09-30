@@ -1,0 +1,71 @@
+.container {
+    height: max-content;
+    padding: 30px;
+    width: 800px;
+    background: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    border-radius: 1%;
+}
+
+.close {
+    cursor: pointer;
+
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+}
+
+.css-dpjnhs-MuiInputBase-root-MuiOutlinedInput-root {
+    width: 500px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 1%;
+}
+
+.overLay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .7);
+    z-index: 1000;
+}
+
+.edit_fild {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 1%;
+}
+
+@media only screen and (max-width: 600px) {
+    .css-heg063-MuiTabs-flexContainer {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .container {
+        height: 700px;
+        width: 350px;
+    }
+
+    .logo {
+        width: 36%;
+        height: 10%;
+
+    }
+}

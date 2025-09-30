@@ -1,0 +1,99 @@
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.left {
+    display: flex;
+    max-width: 20%;
+    width: 20%;
+    flex-direction: column;
+}
+
+.left_conversation {
+    width: 100%;
+    text-align: left;
+    border: 1px solid rgba(0,0,0,0.2);
+    padding: 20px 10px;
+    cursor: pointer;
+}
+
+.left_conversation:hover {
+    background: rgba(0,0,0,0.1);
+}
+
+.left_title_container {
+    display: flex;
+    font-weight: bold;
+    gap: 10px;
+    align-items: center;
+}
+
+.left_title_name {
+    font-size: 18px;
+}
+
+.right {
+    display: flex;
+    width: 80%;
+    max-width: 80%;
+    flex-direction: column;
+}
+
+.mail_responses {
+    height: 500px;
+    overflow: auto;
+}
+
+.right_mail_card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.2);
+}
+
+.right_header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: start;
+    text-align: start;
+    border: 1px solid rgba(0,0,0,0.2);
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.right_content {
+    display: flex;
+    text-align: start;
+    padding: 10px;
+}
+
+.right_header_name, .right_header_title {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.right_footer {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.right_footer_reply_textbox {
+    width: 97%;
+    height: 120px;
+}
+
+.right_footer_reply_actions {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.right_footer_textlabel {
+    margin-left: 10px;
+}

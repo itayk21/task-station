@@ -1,0 +1,22 @@
+@media (max-width: 768px) {
+    .table {
+        width: 100%;
+        overflow-y: scroll;
+    }
+}
+
+.tablePlace {
+    display: flex;
+    justify-content: center;
+
+
+}
+
+.table {
+    width: 800px;
+}
+
+.table table {
+    width: inherit;
+
+}

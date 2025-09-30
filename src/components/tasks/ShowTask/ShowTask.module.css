@@ -1,0 +1,87 @@
+.header_details {
+    display: flex;
+}
+
+.header_right h1 {
+    font-size: 30px;
+    margin: 0;
+}
+
+
+.header_right p {
+    font-size: 20px;
+    margin: 0;
+    color: lightslategray;
+}
+
+.header_right {
+    text-align: left;
+    margin-left: 20px;
+}
+
+.header_left {
+    height: 60px;
+    width: 60px;
+    border-radius: 14px;
+    background: blue;
+}
+
+.completeStatus {
+    display: flex;
+    justify-content: space-between;
+}
+
+.completeStatus_percentage {
+    font-weight: 700;
+}
+
+.completeStatus_days_left {
+    font-weight: 300;
+    color: slategray;
+}
+
+.progress_bar {
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.2);
+    height: 10px;
+    border-radius: 14px;
+    display: block;
+    overflow: hidden;
+}
+
+.progress_bar_value {
+    height: 100%;
+    background: darkgreen;
+}
+
+.workers_and_time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.content_header{
+    padding: 10px 0;
+    display: flex;
+    font-size: 22px;
+}
+
+.container hr {
+    color: rgba(0,0,0,0.3);
+    margin: 14px 0px;
+}
+
+.container main {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer_buttons{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+

@@ -1,0 +1,40 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .7);
+    z-index: 1000;
+}
+
+.container {
+    position: fixed;
+    z-index: 1000;
+    height: max-content;
+    padding: 30px;
+    width: 500px;
+    max-width: 80%;
+    background: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 8px;
+}
+
+.close {
+    display: flex;
+    justify-content: start;
+    cursor: pointer;
+}
+
+.container section {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    margin-top: 15px;
+    text-align: start;
+    align-items: start;
+    gap: 10px;
+}

@@ -1,0 +1,68 @@
+.inputGroup {
+    font-family: 'Segoe UI', sans-serif;
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+}
+
+.inputGroup input, .inputGroup textarea {
+    font-size: 100%;
+    outline: none;
+    border: 0;
+    outline: 0;
+    padding: 15px 3px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.2);
+    background-color: transparent;
+    resize: none;
+}
+
+.inputGroup label {
+    font-size: 100%;
+    position: absolute;
+    left: 0;
+    padding: 0.8em;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    color: rgba(100, 100, 100, 0.7);
+}
+
+.inputGroup :is(input:focus, input:valid)~label, .inputGroup :is(textarea:focus, textarea:valid)~label {
+    transform: translateY(-50%) scale(.9);
+    margin: 0em;
+    margin-left: 1.3em;
+    padding: 0.4em;
+    background-color: white;
+}
+
+.inputGroup :is(input:focus, input:valid), .inputGroup :is(textarea:focus, textarea:valid) {
+    border-color: rgba(0,0,0,0.2);
+}
+
+.ds-input {
+    border: 0;
+    outline: 0;
+    padding: 15px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.2);
+    display: flex;
+    gap: 10px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.ds-input.disabled {
+    background: rgba(0,0,0,0.05);
+}
+
+.ds-input input {
+    border: 0;
+    outline: 0;
+    font-size: 16px;
+    background: transparent;
+}
+
+.ds-input label {
+    color: rgba(0,0,0,0.5);
+    font-size: 14px;
+}

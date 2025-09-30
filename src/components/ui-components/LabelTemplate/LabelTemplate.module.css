@@ -1,0 +1,12 @@
+.photo {
+    background: #a4a4b3;
+    width: 2%;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.photo:hover{
+    width: 10%;
+    transition: 1s;
+
+}

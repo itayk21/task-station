@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav {
+            background: #000;
+            height: 120px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .nav-left,
+        .nav-right {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .nav a:hover {
+            color: yellow;
+        }
+
+        header {
+            background: #1f2a44;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .card {
+            width: 250px;
+            height: 400px;
+            padding: 15px;
+            border: 1px solid #aaa;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .cards .card:nth-child(1) {
+            background: #fff7e6;
+        }
+
+        .cards .card:nth-child(2) {
+            background: #e6fff9;
+        }
+
+        .cards .card:nth-child(3) {
+            background: #eaf0ff;
+        }
+
+        footer {
+            background: #1f2a44;
+            color: #eee;
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="nav">
+        <div class="nav-left">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="nav-right">
+            <a href="#">Services</a>
+            <a href="#">Gallery</a>
+            <a href="#">Blog</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Welcome to the Example Website</h1>
+    </header>
+
+    <main class="cards">
+        <div class="card">Card 1</div>
+        <div class="card">Card 2</div>
+        <div class="card">Card 3</div>
+    </main>
+
+    <footer>
+        <p>© 2025 All rights reserved</p>
+    </footer>
+
+</body>
+
+</html>
