@@ -1,57 +1,56 @@
 .loginRegister {
-    border: 1px solid #2a41ed;
-    border-radius: 5px;
-    padding: 20px;
-    width: 57%;
-    height: 295px;
-    margin-left: 20%;
-    margin-top: 5%;
-    box-shadow: 2px 2px#2a41ed;
-    text-align: center;
+  border: 1px solid #2a41ed;
+  border-radius: 5px;
+  padding: 20px;
+  width: 57%;
+  height: 295px;
+  margin-left: 20%;
+  margin-top: 5%;
+  box-shadow: 2px 2px#2a41ed;
+  text-align: center;
 }
 
-
 .loginTitle {
-    color: #2a41ed;
+  color: #2a41ed;
+}
 
-
+.headLine {
+  text-align: center;
 }
 
 .login {
-    width: 45%;
-    height: 30px;
-    margin: 5px;
-    border-radius: 5px;
-    margin: 10px;
+  width: 45%;
+  height: 30px;
+  margin: 5px;
+  border-radius: 5px;
+  margin: 10px;
 }
 
-
-
 .BtLogin {
-    color: #4156f2;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    font-size: 12px;
-    width: 15%;
-    height: 10%;
-    left: 15px;
-    margin-top: 18px;
-    font-size: 20px;
-    font-weight: 600;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: #4156f2;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  width: 15%;
+  height: 10%;
+  left: 15px;
+  margin-top: 18px;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 .registerData {
-    padding-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .inputContainer {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    font-size: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  font-size: 20px;
 }

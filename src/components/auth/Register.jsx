@@ -54,7 +54,7 @@ const Register = ({ verificationId }) => {
   return (
     <div>
       <div className={styles.registerData}>
-        <h1>Join Us To Work Beter</h1>
+        <h1 className={styles.headLine}>Join Us To Work Beter</h1>
         <div className={styles.inputContainer}>
           <label>Email: </label>
           <input

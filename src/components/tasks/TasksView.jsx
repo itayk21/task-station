@@ -223,7 +223,7 @@ const TasksView = ({
         </div>
         {!filteredData.length && <div>No data found.</div>}
         {!!filteredData.length && (
-          <div style={{ display: "flex", flexWrap: "wrap" }}>{renderTasks}</div>
+          <div className={styles.cardContainer}>{renderTasks}</div>
         )}
       </div>
     </>

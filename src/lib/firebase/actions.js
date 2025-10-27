@@ -23,27 +23,57 @@ export const updateUserByObj = (user, userUpdated) => {
   set(ref(database, "users/" + user.id), { ...user, ...userUpdated });
 };
 
+// export const findAllUsers = (setUsers) => {
+//   const refVal = ref(database, "users/");
+//   let response;
+
+//   onValue(
+//     refVal,
+//     (snapshot) => {
+//       response = snapshot.val();
+//       let values = Object.values(response); // turn to array
+//       if (values.length) {
+//         /* length > 0 */
+//         // values = values.filter((user) => {
+//         //     return user.work_status !== null
+//         // })
+//         setUsers(values);
+//       }
+//     },
+//     { onlyOnce: true }
+//   );
+
+//   return response;
+// };
+
 export const findAllUsers = (setUsers) => {
   const refVal = ref(database, "users/");
-  let response;
 
-  onValue(
-    refVal,
-    (snapshot) => {
-      response = snapshot.val();
-      let values = Object.values(response); // turn to array
-      if (values.length) {
-        /* length > 0 */
-        // values = values.filter((user) => {
-        //     return user.work_status !== null
-        // })
-        setUsers(values);
-      }
-    },
-    { onlyOnce: true }
-  );
+  const unsubscribe = onValue(refVal, (snapshot) => {
+    const data = snapshot.val();
+    console.log("findAllUsers snapshot:", data); // <-- בדוק כאן בקונסול
+    if (!data) {
+      setUsers([]);
+      return;
+    }
 
-  return response;
+    let users = Object.values(data);
+
+    users = users.map((user) => ({
+      ...user,
+      role: user.role || "user",
+      name: user.name || "Unknown",
+      email: user.email || "unknown@email.com",
+    }));
+
+    // console.log("findAllUsers -> users array:", users); // <-- גם פה
+    setUsers(users);
+  });
+
+  return () => {
+    // נוח לבטל את ההאזנה כשקומפוננטה מתפרקת
+    unsubscribe && unsubscribe();
+  };
 };
 
 export const findAllUsersUnverified = (setUnverified) => {
@@ -153,7 +183,8 @@ export const updateTask = (id, obj) => {
   return update(ref(database, "tasks/" + id), obj); // merge במקום set
 };
 
-export const resetPassword = (auth, email) => {updateTask
+export const resetPassword = (auth, email) => {
+  updateTask;
   sendPasswordResetEmail(auth, email)
     .then(() => {
       console.log("Sent successfully");

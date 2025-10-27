@@ -5,6 +5,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import DoneIcon from "@mui/icons-material/Done";
 import SaveIcon from "@mui/icons-material/Save";
+import Autocomplete from "@mui/material/Autocomplete"; // ADD THIS
+import Chip from "@mui/material/Chip"; // ADD THIS
 import { addNewTask, updateTask } from "../../lib/firebase/actions";
 import DialogScreen from "../ui-components/DialogScreen";
 import DropList from "./DropList";
@@ -82,11 +84,38 @@ export const NewTask = ({
       })) ||
     [];
 
+  const isEndTaskMode = action === "END_TASK";
+  const isDone = data.status === "DONE";
+  const isCanceled = data.status === "CANCELED";
+
   useEffect(() => {
     if (!participants.length) {
       findAllUsers(setParticipants);
     }
   }, []);
+
+  // Initialize selected participants when data is available
+  useEffect(() => {
+    if (data.participants && data.participants.length > 0) {
+      setSelectedParticipants(data.participants);
+    }
+  }, [data.participants, participants]);
+
+  // useEffect(() => {
+  //   console.log("=== DEBUG INFO ===");
+  //   console.log("isEdit:", isEdit);
+  //   console.log("isDone:", isDone);
+  //   console.log("isCanceled:", isCanceled);
+  //   console.log("selectedParticipants:", selectedParticipants);
+  //   console.log("filteredParticipants:", filteredParticipants);
+  //   console.log("==================");
+  // }, [isEdit, isDone, isCanceled, selectedParticipants, filteredParticipants]);
+
+  // useEffect(() => {
+  //   if (!participants.length) {
+  //     findAllUsers(setParticipants);
+  //   }
+  // }, []);
 
   const generateTaskData = () => {
     return {
@@ -188,16 +217,14 @@ export const NewTask = ({
     DISABLE_MSG: "Do you want to disable this task?",
   };
 
-  const isEndTaskMode = action === "END_TASK";
-  const isDone = data.status === "DONE";
-  const isCanceled = data.status === "CANCELED";
-
   const participantsContainer = !!participants.length && (
     <>
       <ol>
-        {participants?.map((participant, idx) => {
-          return <li key={idx}>{JSON.stringify(participant)}</li>;
-        })}
+        {participants?.map((participant) => (
+          <li key={participant.id || participant.email}>
+            {JSON.stringify(participant)}
+          </li>
+        ))}
       </ol>
     </>
   );
@@ -295,23 +322,54 @@ export const NewTask = ({
         </div>
 
         <div>
-          {isEdit ? (
-            <>
-              <MultipleSelection
-                label="Workers Names:"
-                names={filteredParticipants}
-                setSelectedParticipants={setSelectedParticipants}
-                selectedParticipants={selectedParticipants}
-              />
-
-              {/*<MultiSelectionNew />*/}
-            </>
-          ) : (
-            <>
-              <div>Parcitipants:</div>
-              <div>{participantsContainer}</div>
-            </>
-          )}
+          <div>
+            {isEdit ? (
+              filteredParticipants.length > 0 ? (
+                <Autocomplete
+                  multiple
+                  disabled={isDone || isCanceled}
+                  options={filteredParticipants}
+                  getOptionLabel={(option) =>
+                    `${option.name} (${option.email})`
+                  }
+                  value={filteredParticipants.filter((p) =>
+                    selectedParticipants.includes(`${p.name}-${p.email}`)
+                  )}
+                  onChange={(event, newValue) => {
+                    const formatted = newValue.map(
+                      (p) => `${p.name}-${p.email}`
+                    );
+                    setSelectedParticipants(formatted);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Workers Names"
+                      placeholder="Select workers"
+                    />
+                  )}
+                  renderTags={(value, getTagProps) =>
+                    value.map((option, index) => (
+                      <Chip
+                        key={option.id || option.email || index}
+                        label={option.name}
+                        {...getTagProps({ index })}
+                        disabled={isDone || isCanceled}
+                      />
+                    ))
+                  }
+                />
+              ) : (
+                <div>Loading participants...</div>
+              )
+            ) : (
+              <>
+                <div>Participants:</div>
+                <div>{participantsContainer}</div>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Status */}

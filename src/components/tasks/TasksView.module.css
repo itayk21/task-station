@@ -1,14 +1,19 @@
-
-.container{
-    width: 100%;
-
+.container {
+  width: 100%;
 }
 
-.customControls{
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    justify-content: center;
-    margin-top: 18px;
+.customControls {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 18px;
+}
 
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2%;
+  margin-top: 1%;
 }
