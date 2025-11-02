@@ -51,7 +51,7 @@ export const findAllUsers = (setUsers) => {
 
   const unsubscribe = onValue(refVal, (snapshot) => {
     const data = snapshot.val();
-    console.log("findAllUsers snapshot:", data); // <-- בדוק כאן בקונסול
+
     if (!data) {
       setUsers([]);
       return;

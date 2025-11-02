@@ -61,6 +61,7 @@ export const NewTask = ({
   setIsModalOpen,
 }) => {
   const currentTime = new Date();
+
   const currentTimeWithFormat = format(currentTime, "yyyy-MM-dd");
 
   const [open, setOpen] = React.useState(false);
@@ -77,12 +78,13 @@ export const NewTask = ({
   const [selectedParticipants, setSelectedParticipants] = useState([]);
   const [hasSubmitError, setHasSubmitError] = useState(false);
 
-  const filteredParticipants =
-    (participants.length &&
-      participants?.filter((participant) => {
-        return participant.role === "user";
-      })) ||
-    [];
+  // const filteredParticipants =
+  //   (participants.length &&
+  //     participants?.filter((participant) => {
+  //       console.log(participants);
+  //       return participant.role === "user";
+  //     })) ||
+  //   [];
 
   const isEndTaskMode = action === "END_TASK";
   const isDone = data.status === "DONE";
@@ -216,7 +218,7 @@ export const NewTask = ({
     DISABLE_TITLE: "Disable",
     DISABLE_MSG: "Do you want to disable this task?",
   };
-
+  console.log("ppppp" + selectedParticipants);
   const participantsContainer = !!participants.length && (
     <>
       <ol>
@@ -324,17 +326,20 @@ export const NewTask = ({
         <div>
           <div>
             {isEdit ? (
-              filteredParticipants.length > 0 ? (
+              participants.length > 0 ? (
                 <Autocomplete
                   multiple
                   disabled={isDone || isCanceled}
-                  options={filteredParticipants}
+                  options={participants}
                   getOptionLabel={(option) =>
                     `${option.name} (${option.email})`
                   }
-                  value={filteredParticipants.filter((p) =>
-                    selectedParticipants.includes(`${p.name}-${p.email}`)
-                  )}
+                  value={participants.filter((p) => {
+                    console.log(selectedParticipants);
+                    return selectedParticipants.includes(
+                      `${p.name}-${p.email}`
+                    );
+                  })}
                   onChange={(event, newValue) => {
                     const formatted = newValue.map(
                       (p) => `${p.name}-${p.email}`
